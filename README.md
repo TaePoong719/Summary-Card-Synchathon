@@ -33,12 +33,12 @@ EsLint는 Airbnb 속성을 가져왔습니다.
 
 1. git clone [github URL 주소]
 2. `npm i`
-3. `npm run dev` : 배포환경 확인
+3. `npm run dev` : 개발환경 확인
 
 ### 협업 시
 
 1. `git pull origin dev` : 진행 사항 가져오기
-2. `npm run format:fix` : prettier 속성에 맞춰 수정
+2. `npm run format:fix` : prettier 속성에 맞춰 수정 (VSCode 사용시 생략)
 3. `git add .` && `git commit -m"[커밋컨벤션]: [커밋메세지]"`
 4. `git push origin dev` : 진행 사항 저장하기
 
@@ -47,6 +47,9 @@ EsLint는 Airbnb 속성을 가져왔습니다.
 ### Github Actions 사용
 
 Continuous Integration : Dev의 에러가 없을 경우 Main으로 자동 통합
+
+### Netlify 사용
+
 Continuous Delivery : Main 브랜치 자동 배포
 
-[배포링크] (www.naver.com)
+[배포링크](https://summary-card-synchathon.netlify.app/)
