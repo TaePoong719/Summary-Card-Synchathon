@@ -3,8 +3,10 @@ import Header from './components/Header'
 import styled from 'styled-components'
 import Sidebar from './components/Sidebar'
 import AuthProvider from './provider/userProvider'
+// import { useState } from 'react'
 
 const App = () => {
+  // const [userCard, setUserCard] = useState([])
   return (
     <>
       <AuthProvider>
