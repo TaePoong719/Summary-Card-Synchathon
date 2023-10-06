@@ -1,5 +1,5 @@
-const PdfDetail = () => {
+const pdfDetail = () => {
   return <div>pdfDetail</div>
 }
 
-export default PdfDetail
+export default pdfDetail
