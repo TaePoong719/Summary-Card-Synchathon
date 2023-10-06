@@ -4,7 +4,7 @@ import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Landing from './pages/Landing'
 import Home from './pages/Home'
-import Detail from './pages/PDFDetail'
+import Detail from './pages/PDFDetail.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/Signup.jsx'
 
