@@ -3,10 +3,8 @@ import Header from './components/Header'
 import styled from 'styled-components'
 import Sidebar from './components/Sidebar'
 import AuthProvider from './provider/userProvider'
-// import { useState } from 'react'
 
 const Containers = () => {
-  // const [userCard, setUserCard] = useState([])
   return (
     <>
       <AuthProvider>
@@ -22,7 +20,8 @@ const Containers = () => {
   )
 }
 
-export const InnerContainer = styled.main`
+export const InnerContainer = styled.div`
+  box-sizing: border-box;
   padding: 20px;
   position: relative;
   left: 200px;
@@ -31,7 +30,9 @@ export const InnerContainer = styled.main`
 
 export const Container = styled.main`
   margin: 0 auto;
+  box-sizing: border-box;
   max-width: 1200px;
+  height: calc(100% - 60px);
   padding: 0 20px;
   position: relative;
   top: 60px;
