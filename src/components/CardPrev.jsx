@@ -1,25 +1,36 @@
 import styled from 'styled-components'
+import { Link, useLocation } from 'react-router-dom'
+import '../style/CardPrev.css'
 
 const CardPrev = ({ card }) => {
+  const location = useLocation()
   console.log(card)
   return (
-    <Container $color={card.cardColor}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          padding: '0 15px',
-          boxSizing: 'border-box',
-        }}
-      >
-        <CompanyImage src={`${import.meta.env.BASE_URL}company/${card.company}.svg`}></CompanyImage>
-        <h3>{card.company}</h3>
-      </div>
-      <h1>{card.name}</h1>
-      <h4>{card.date}</h4>
-    </Container>
+    <Link
+      to={`/card/${card.cardId}`}
+      className="custom-link "
+      state={{ background: location, card: card }}
+    >
+      <Container $color={card.cardColor}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            padding: '0 15px',
+            boxSizing: 'border-box',
+          }}
+        >
+          <CompanyImage
+            src={`${import.meta.env.BASE_URL}company/${card.company}.svg`}
+          ></CompanyImage>
+          <h3>{card.company}</h3>
+        </div>
+        <h1>{card.name}</h1>
+        <h4>{card.date}</h4>
+      </Container>
+    </Link>
   )
 }
 

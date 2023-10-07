@@ -1,0 +1,8 @@
+.custom-link {
+  text-decoration: none; /* Remove underline */
+  color: #000; /* Change text color to black */
+}
+
+.custom-link:hover {
+  color: #007bff; /* Change text color to blue on hover */
+}

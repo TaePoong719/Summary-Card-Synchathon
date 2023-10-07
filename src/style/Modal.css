@@ -1,0 +1,26 @@
+/* modal.css */
+.modalDiv {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  background-color: rgba(153, 153, 153, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+}
+
+.modal {
+  width: 100%;
+  max-width: 500px;
+  min-height: 600px; /* 최소 높이 설정 */
+  height: auto; /* 높이를 자동으로 설정하여 내용에 따라 조절 */
+  margin: 0; /* 마진을 0으로 설정하여 여백을 없앰 */
+  background-color: white;
+  border-radius: 30px;
+  overflow: hidden;
+}
