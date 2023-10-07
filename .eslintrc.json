@@ -15,6 +15,7 @@
     "react/jsx-filename-extension": 0,
     "react/jsx-one-expression-per-line": 0,
     "no-nested-ternary": 0,
-    "react/prop-types": "off"
+    "react/prop-types": 0,
+    "no-unused-vars": 0
   }
 }
