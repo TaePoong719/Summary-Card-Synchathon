@@ -1,40 +1,25 @@
-import { Outlet } from 'react-router-dom'
-import Header from './components/Header'
-import styled from 'styled-components'
-import Sidebar from './components/Sidebar'
-import AuthProvider from './provider/userProvider'
-// import { useState } from 'react'
-
-const App = () => {
-  // const [userCard, setUserCard] = useState([])
+import { Route, Routes } from 'react-router-dom'
+import Landing from './pages/Landing'
+import Home from './pages/Home'
+import Card from './components/Card.jsx'
+import Login from './pages/Login.jsx'
+import SignUp from './pages/Signup.jsx'
+import Containers from './Containers.jsx'
+function App() {
   return (
-    <>
-      <AuthProvider>
-        <Header />
-        <Container>
-          <Sidebar />
-          <InnerContainer>
-            <Outlet />
-          </InnerContainer>
-        </Container>
-      </AuthProvider>
-    </>
+    <div>
+      <Routes>
+        <Route index element={<Landing />} />
+        <Route path="/" element={<Containers />}>
+          <Route path="home" element={<Home />}></Route>
+          <Route path="card" element={<Card />}></Route>
+          {/* <Route path="pdf_detail" element={<Detail />}></Route> */}
+        </Route>
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
+      </Routes>
+    </div>
   )
 }
-
-const InnerContainer = styled.main`
-  padding: 20px;
-  position: relative;
-  left: 200px;
-  width: calc(100% - 200px);
-`
-
-const Container = styled.main`
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 20px;
-  position: relative;
-  top: 60px;
-`
 
 export default App

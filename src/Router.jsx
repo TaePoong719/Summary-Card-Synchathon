@@ -4,7 +4,7 @@ import Home from './pages/Home'
 // import Detail from './pages/PdfDetail.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/Signup.jsx'
-import App from './App.jsx'
+import Container from './Containers.jsx'
 
 const Router = () => {
   const location = useLocation()
@@ -13,7 +13,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route index element={<Landing />}></Route>
-        <Route path="/" element={<App />}>
+        <Route path="/" element={<Container />}>
           <Route path="home" element={<Home />}></Route>
           {/* <Route path="pdf_detail" element={<Detail />}></Route> */}
         </Route>
