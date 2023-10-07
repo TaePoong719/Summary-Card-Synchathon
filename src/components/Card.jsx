@@ -5,12 +5,11 @@ import CardEdit from './CardEdit.jsx'
 
 const Card = () => {
   const CardModifying = useState(false)
-
   return (
     <div>
       <Modal>
-        {!CardModifying && CardDetail}
-        {CardModifying && CardEdit}
+        {CardModifying && <CardDetail />}
+        {!CardModifying && <CardEdit />}
       </Modal>
     </div>
   )
