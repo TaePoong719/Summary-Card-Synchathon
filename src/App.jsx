@@ -57,7 +57,7 @@ const testUserCard = [
     name: '이륜차 상해보험',
     category: '보험',
     date: '2023-10-07',
-    company: '교보 생명',
+    company: '교보생명',
     pdfLink: 'https://naver.com',
     summary: `
       교보생명 이륜차보험은 이륜차 소유자들을 위한 보험 상품입니다. 
@@ -76,7 +76,7 @@ const testUserCard = [
     name: '손해 보험',
     category: '보험',
     date: '2023-10-05',
-    company: '교보 생명',
+    company: '교보생명',
     pdfLink: 'https://naver.com',
     summary: `
       교보생명 이륜차보험은 이륜차 소유자들을 위한 보험 상품입니다. 
@@ -88,14 +88,14 @@ const testUserCard = [
       이 보험은 이륜차 소유자의 안전을 보호하기 위해 필수적입니다.
       사고로 인한 금전적인 손실을 방지하여 안심하고 차량을 이용할 수 있도록 도와줍니다.
       `,
-    cardColor: 'B290AA',
+    cardColor: '#B290AA',
   },
   {
     cardId: 'a719cmkhoksams',
     name: '암 보험',
     category: '보험',
     date: '2023-10-08',
-    company: '교보 생명',
+    company: '교보생명',
     pdfLink: 'https://naver.com',
     summary: `
       교보생명 이륜차보험은 이륜차 소유자들을 위한 보험 상품입니다. 
@@ -114,7 +114,7 @@ const testUserCard = [
     name: '암 보험',
     category: '보험',
     date: '2023-10-08',
-    company: '교보 생명',
+    company: '교보생명',
     pdfLink: 'https://naver.com',
     summary: `
       교보생명 이륜차보험은 이륜차 소유자들을 위한 보험 상품입니다. 

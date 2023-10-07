@@ -19,7 +19,7 @@ const Header = () => {
     <Container>
       <InnerContainer>
         <Link to={`/home`}>
-          <Logo src="public/logo_with_finset.svg" alt="logo" />
+          <Logo src={`${import.meta.env.BASE_URL}logo_with_finset.svg`} alt="logo" />
         </Link>
         {user?.displayName ? (
           <>
@@ -40,9 +40,7 @@ const Header = () => {
                     setDisplayUserInfo(false)
                   }}
                   className="header__user-info-block"
-                >
-                  {' '}
-                </div>
+                ></div>
               ) : (
                 <></>
               )}
