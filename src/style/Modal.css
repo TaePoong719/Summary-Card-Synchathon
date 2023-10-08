@@ -21,6 +21,8 @@
   height: auto; /* 높이를 자동으로 설정하여 내용에 따라 조절 */
   margin: 0; /* 마진을 0으로 설정하여 여백을 없앰 */
   background-color: white;
-  border-radius: 30px;
-  overflow: hidden;
+  border-radius: 20px;
+  position: relative;
+  overflow: visible; /* 자식 요소가 modal을 벗어나도 표시되게 함 */
+  z-index: 1; /* 어떤 값이든 괜찮습니다. 여기서는 1을 예시로 사용했습니다. */
 }

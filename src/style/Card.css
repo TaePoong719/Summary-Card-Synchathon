@@ -1,11 +1,22 @@
+.UpperBox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .ImgBox {
-  width: 150px;
-  height: 150px;
-  border-radius: 70%;
-  top: -75px;
-  z-index: 1;
+  width: 35%; /* width와 height를 동일한 값으로 설정 */
+  height: 30%;
+  margin-top: -23%;
+  margin-right: 60%;
+  margin-left: 5%;
+  border-radius: 50%; /* 원 형태를 만들기 위해 50%로 설정 */
+  z-index: 2;
   overflow: hidden;
-  text-align: center; /* 텍스트 정렬을 중앙으로 설정 */
+  text-align: center;
+  position: absolute;
   background-color: white;
 }
 
@@ -17,34 +28,30 @@ img {
   display: block; /* 이미지를 블록 요소로 설정하여 가로 중앙 정렬을 적용 */
 }
 
-.UpperBox {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
 .InnerBox {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   align-self: flex-end;
+  margin-left: auto;
+  margin-top: -7%;
 }
 
 .CompanySelect {
-  margin-left: 90%;
+  margin-left: 50%;
   margin-bottom: 10px;
 }
 
 select {
+  font-size: 20px; /* 폰트 크기 설정 */
+  font-weight: bold;
   padding: 10px;
   border-radius: 5px;
+  border: none;
   appearance: none; /* 표준 속성 - 모든 브라우저에서 select의 기본 스타일 제거 */
   -webkit-appearance: none; /* 크롬, 사파리 등 웹킷 브라우저용 */
   -moz-appearance: none; /* 파이어폭스용 */
-  border: 1px solid #ccc; /* 경계선 설정 */
-  font-size: 16px; /* 폰트 크기 설정 */
   outline: none; /* 포커스 상태에서의 외곽선 제거 */
   text-align: right; /* 대부분의 브라우저에서의 텍스트 중앙 정렬 */
   text-align-last: right;
@@ -56,13 +63,14 @@ select::-ms-expand {
 }
 
 .CardNameInput {
-  width: 100%;
-  margin-left: 43%; /* 왼쪽 여백을 18%로 설정 */
+  margin-left: 10%;
+  width: 70%;
 }
 
-.CardNameInput input {
-  font-size: 17px;
-  margin-right: 10px;
+.CardNameInput input,
+.CardNameInput input:disabled {
+  font-weight: bold;
+  font-size: 25px;
   text-align: right;
   width: 100%;
   box-sizing: border-box; /* border와 padding을 요소의 전체 너비 및 높이에 포함시킴 */
@@ -70,6 +78,14 @@ select::-ms-expand {
   border: none; /* 테두리 제거 */
   border-radius: 5px;
   outline: none; /* 입력 요소 활성화 시 나타나는 외곽선 제거 */
+  background-color: #ffffff; /* 백그라운드 색상 지정 */
+  opacity: 1; /* 완전히 불투명하게 설정 */
+  color: #000; /* 글자 색상 지정. 원하는 색상으로 변경 가능 */
+}
+
+/* 추가적으로 필요한 스타일 */
+.CardNameInput input:disabled {
+  cursor: default; /* 마우스 포인터를 기본 아이콘으로 변경 */
 }
 
 .PdfInput {
@@ -78,16 +94,24 @@ select::-ms-expand {
   width: 90%;
 }
 
-.PdfInput input {
+.PdfInput textarea,
+.PdfInput textarea:disabled {
   font-size: 17px;
+  font-weight: bold;
+  text-align: left;
   margin-right: 10px;
-  text-align: right;
   width: 100%;
-  box-sizing: border-box; /* border와 padding을 요소의 전체 너비 및 높이에 포함시킴 */
-  padding: 10px; /* input에 padding 추가 */
-  border: none; /* 테두리 제거 */
+  box-sizing: border-box;
+  border: none;
   border-radius: 5px;
-  outline: none; /* 입력 요소 활성화 시 나타나는 외곽선 제거 */
+  outline: none;
+  background-color: #ffffff;
+  opacity: 1;
+  color: #000;
+  resize: none; /* 사용자가 크기를 조절하지 못하게 함 */
+  min-height: 5rem;
+  overflow-y: hidden;
+  resize: none;
 }
 
 .Palette {
@@ -128,7 +152,15 @@ select::-ms-expand {
   border-radius: 5px;
 }
 
+.Buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px; /* Adjust this value to increase or decrease the side spacing */
+}
+
 .PdfSummary {
+  font-size: 17px;
+  font-weight: bold;
   width: 100%;
   height: 100%;
   min-width: 110px;
@@ -136,5 +168,34 @@ select::-ms-expand {
   background-color: white;
   color: #5289ff;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  margin-right: 10px; /* Adding some space between the buttons */
+}
+
+.PdfDetail {
+  font-size: 17px;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  min-width: 110px;
+  min-height: 50px;
+  background-color: white;
+  color: #5289ff;
+  border: none;
+  border-radius: 10px;
+  margin-right: 10px; /* Adding some space between the buttons */
+}
+
+.LinkToCardEdit {
+  font-size: 17px;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  min-width: 110px;
+  min-height: 50px;
+  background-color: white;
+  color: #5289ff;
+  border: none;
+  border-radius: 10px;
+  margin-left: 10px; /* Adding some space between the buttons */
 }
