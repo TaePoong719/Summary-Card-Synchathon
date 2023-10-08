@@ -3,36 +3,44 @@ import { Link } from 'react-router-dom'
 
 const CardDetail = ({ card, setCardModifying }) => {
   const modalStyle = {
-    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center', // 추가된 코드
     maxWidth: '500px',
     minHeight: '600px',
     height: '100%',
-    overflow: 'hidden',
     backgroundColor: card.cardColor,
   }
 
   return (
     <div className="CardDetailDiv" style={modalStyle}>
-      <div>
+      <div className="UpperBox">
         <div className="ImgBox">
           <img
             src={`${import.meta.env.BASE_URL}company/${card.company}.svg`}
-            alt={'교보생명로고'}
+            alt={`${card.company}로고`}
           />
         </div>
-        <div>
-          <div>
+        <div className="InnerBox">
+          <div className="CardCompany">
             <span className="">{card.company}</span>
           </div>
-          <div>
+          <div className="CardName">
             <span>{card.name}</span>
           </div>
         </div>
       </div>
-      <div>
-        <span>{card.summary}</span>
+      <div className="CardSummary">
+        <span>
+          {card.summary
+            .trim()
+            .split('\n')
+            .map((line) => `· ${line}`)
+            .join('\n')}
+        </span>
       </div>
-      <div>
+      <div className="Buttons">
         <Link to={`/pdfdetail/${card.cardId}`}>
           <button className="PdfDetail">자세히 보기</button>
         </Link>

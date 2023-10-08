@@ -2,6 +2,8 @@
   width: 150px;
   height: 150px;
   border-radius: 70%;
+  top: -75px;
+  z-index: 1;
   overflow: hidden;
   text-align: center; /* 텍스트 정렬을 중앙으로 설정 */
   background-color: white;
@@ -15,14 +17,82 @@ img {
   display: block; /* 이미지를 블록 요소로 설정하여 가로 중앙 정렬을 적용 */
 }
 
+.UpperBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.InnerBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  align-self: flex-end;
+}
+
+.CardCompany {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 100%;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.CardName {
+  font-size: 25px;
+  font-weight: bold;
+  width: 100%;
+  margin-left: 43%; /* 왼쪽 여백을 18%로 설정 */
+}
+
+.CardSummary {
+  margin-left: 10%;
+  margin-right: 10%;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.CardSummary span {
+  white-space: pre-line;
+  line-height: 2;
+}
+
 span {
   color: white;
 }
 
-.PdfDetail,
-.LinkToCardEdit {
+.Buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px; /* Adjust this value to increase or decrease the side spacing */
+}
+
+.PdfDetail {
+  font-size: 17px;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  min-width: 110px;
+  min-height: 50px;
   background-color: white;
   color: #5289ff;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  margin-right: 10px; /* Adding some space between the buttons */
+}
+
+.LinkToCardEdit {
+  font-size: 17px;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  min-width: 110px;
+  min-height: 50px;
+  background-color: white;
+  color: #5289ff;
+  border: none;
+  border-radius: 10px;
+  margin-left: 10px; /* Adding some space between the buttons */
 }

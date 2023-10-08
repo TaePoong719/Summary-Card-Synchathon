@@ -4,14 +4,14 @@ import CardDetail from './CardDetail.jsx'
 import CardEdit from './CardEdit.jsx'
 import { Link, useLocation } from 'react-router-dom'
 
-const Card = () => {
+const Card = ({ userCards, setUserCards }) => {
   const [CardModifying, setCardModifying] = useState(false)
   const card = useLocation().state.card
 
   return (
     <div>
       <Modal>
-        {CardModifying && <CardEdit />}
+        {CardModifying && <CardEdit userCards={userCards} setUserCards={setUserCards} />}
         {!CardModifying && <CardDetail card={card} setCardModifying={setCardModifying} />}
       </Modal>
     </div>

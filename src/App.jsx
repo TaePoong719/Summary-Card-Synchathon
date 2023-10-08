@@ -35,7 +35,7 @@ function App() {
             path="home"
             element={<Home userCards={userCards} setUserCards={setUserCards} />}
           ></Route>
-          <Route path="card/:cardId" element={<Card />}></Route>
+          <Route path="card/:id" element={<Card setUserCards={setUserCards} />}></Route>
           {/* <Route path="pdf_detail" element={<Detail />}></Route> */}
         </Route>
         <Route path="login" element={<Login />} />
@@ -43,7 +43,10 @@ function App() {
       </Routes>
       {background && (
         <Routes>
-          <Route path="card/:cardId" element={<Card />}></Route>
+          <Route
+            path="card/:cardId"
+            element={<Card userCards={userCards} setUserCards={setUserCards} />}
+          ></Route>
           {/* <Route path="pdf_detail" element={<Detail />}></Route> */}
         </Routes>
       )}
