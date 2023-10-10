@@ -4,6 +4,7 @@ import '../style/Home.css'
 import StyledButton from '../components/StyledButton'
 import Search from '../components/Search'
 import { useEffect, useState } from 'react'
+import CardPrevAdd from '../components/CardPrevAdd'
 
 const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
   useEffect(() => {
@@ -39,6 +40,7 @@ const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
         {searchedCards.map((card) => {
           return <CardPrev card={card} key={card.cardId} />
         })}
+        <CardPrevAdd />
       </CardContainer>
     </Container>
   )
