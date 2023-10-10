@@ -4,13 +4,13 @@ import styled from 'styled-components'
 import Sidebar from './components/Sidebar'
 import AuthProvider from './provider/userProvider'
 
-const Containers = () => {
+const Layout = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
   return (
     <>
       <AuthProvider>
         <Header />
         <Container>
-          <Sidebar />
+          <Sidebar userCards={userCards} setSearchedCards={setSearchedCards} />
           <InnerContainer>
             <Outlet />
           </InnerContainer>
@@ -20,7 +20,7 @@ const Containers = () => {
   )
 }
 
-export const InnerContainer = styled.div`
+const InnerContainer = styled.div`
   box-sizing: border-box;
   padding: 20px;
   position: relative;
@@ -28,7 +28,7 @@ export const InnerContainer = styled.div`
   width: calc(100% - 200px);
 `
 
-export const Container = styled.main`
+const Container = styled.main`
   margin: 0 auto;
   box-sizing: border-box;
   max-width: 1200px;
@@ -37,5 +37,4 @@ export const Container = styled.main`
   position: relative;
   top: 60px;
 `
-
-export default Containers
+export default Layout

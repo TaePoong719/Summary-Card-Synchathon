@@ -5,9 +5,7 @@ import StyledButton from '../components/StyledButton'
 import Search from '../components/Search'
 import { useEffect, useState } from 'react'
 
-const Home = ({ userCards, setUserCards }) => {
-  const [searchedCards, setSearchedCards] = useState(userCards)
-
+const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
   useEffect(() => {
     setSearchedCards(userCards)
   }, [userCards])

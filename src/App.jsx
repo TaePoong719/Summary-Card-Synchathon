@@ -1,19 +1,22 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Landing from './pages/Landing'
-import Home from './pages/Home'
+import Home from './pages/Home.jsx'
 import Card from './components/Card.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/Signup.jsx'
-import Containers from './Containers.jsx'
-import { useState } from 'react'
-// import { AuthContext } from '../provider/userContext'
+import Layout from './Layout.jsx'
+import { useContext, useState } from 'react'
+import { AuthContext } from './provider/userContext'
 
 function App() {
+  /* userCards는 유저의 카드, searchedCards는 유저가 카테고리를 클릭하거나, 검색을 했을 경우 화면에 보여지는 카드  */
+  const [userCards, setUserCards] = useState(testUserCard)
+  const [searchedCards, setSearchedCards] = useState(userCards)
   // 모달 배경
   const location = useLocation()
   const background = location.state && location.state.background
-  const [userCards, setUserCards] = useState(testUserCard)
-  // const user = useContext(AuthContext)
+
+  const user = useContext(AuthContext)
 
   // 서버에서 유저 카드 정보 가져오기 데모 코드 : 실제론 fetch 말고 axios 사용하는게 좋을 듯
   // useEffect(() => {
@@ -30,12 +33,29 @@ function App() {
     <div>
       <Routes location={background || location}>
         <Route index element={<Landing />} />
-        <Route path="/" element={<Containers />}>
+        <Route
+          path="/"
+          element={
+            <Layout
+              userCards={userCards}
+              setUserCards={setUserCards}
+              searchedCards={searchedCards}
+              setSearchedCards={setSearchedCards}
+            />
+          }
+        >
           <Route
             path="home"
-            element={<Home userCards={userCards} setUserCards={setUserCards} />}
-          ></Route>
-          <Route path="card/:id" element={<Card setUserCards={setUserCards} />}></Route>
+            element={
+              <Home
+                userCards={userCards}
+                setUserCards={setUserCards}
+                searchedCards={searchedCards}
+                setSearchedCards={setSearchedCards}
+              />
+            }
+          />
+          <Route path="card/:id" element={<Card setUserCards={setUserCards} />} />
           {/* <Route path="pdf_detail" element={<Detail />}></Route> */}
         </Route>
         <Route path="login" element={<Login />} />
