@@ -58,7 +58,7 @@ const sliceStr = (str, n) => {
 }
 
 const Logo = styled.img`
-  width: 100px;
+  width: 120px;
   height: 40px;
 `
 

@@ -6,30 +6,50 @@ import Search from '../components/Search'
 
 const Home = ({ userCards, setUserCards }) => {
   return (
-    <div>
-      <StyledButton
-        onClickHandler={() => {
-          console.log('내 보험 불러오기')
-        }}
-      >
-        <p>내 보험 {<br />} 불러오기</p>
-      </StyledButton>
-      <StyledButton
-        onClickHandler={() => {
-          console.log('청약정보 불러오기')
-        }}
-      >
-        <p>청약정보 {<br />} 불러오기</p>
-      </StyledButton>
-      <Search />
+    <Container>
+      <HeadlineContainer>
+        <ButtonsContainer>
+          <StyledButton
+            onClickHandler={() => {
+              console.log('내 보험 불러오기')
+            }}
+          >
+            <p>내 보험 {<br />} 불러오기</p>
+          </StyledButton>
+          <StyledButton
+            onClickHandler={() => {
+              console.log('청약정보 불러오기')
+            }}
+          >
+            <p>청약정보 {<br />} 불러오기</p>
+          </StyledButton>
+        </ButtonsContainer>
+        <Search />
+      </HeadlineContainer>
       <CardContainer>
         {userCards.map((card) => {
           return <CardPrev card={card} key={card.cardId} />
         })}
       </CardContainer>
-    </div>
+    </Container>
   )
 }
+
+const Container = styled.section`
+  padding: 20px;
+`
+
+const ButtonsContainer = styled.div`
+  display: flex;
+`
+
+const HeadlineContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin: 10px 0 20px 0;
+  padding-right: 30px;
+`
 
 const CardContainer = styled.section`
   padding: 10px;

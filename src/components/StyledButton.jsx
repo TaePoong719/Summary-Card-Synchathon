@@ -8,7 +8,8 @@ const StyledButton = ({ children, onClickHandler }) => {
 const Button = styled.button`
   border-radius: 5px;
   height: 50px;
-  width: 80px;
+  width: 110px;
+  margin: 0 10px;
   cursor: pointer;
   p {
     margin: 0 auto;
@@ -19,10 +20,3 @@ const Button = styled.button`
   background-color: white;
 `
 export default StyledButton
-
-// export const StyledButtonWhite = styled(ButtonInheritance)`
-//   ${ButtonBase}
-//   color: var(--main-color);
-//   border: 0.8px solid var(--main-color);
-//   background-color: #fff;
-// `
