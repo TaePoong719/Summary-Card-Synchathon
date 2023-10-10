@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useDebounce } from '../hooks/useDebounce'
 
-const Search = () => {
-  const handleInput = () => {
+const Search = ({ userCards, setSearchedCards, searchedCards }) => {
+  const [searchVal, setSearchVal] = useState('')
+
+  const handleInputChange = (e) => {
     /* 검색 로직 => 화면에 보이는 요소들을 변경*/
+    setSearchVal(e.target.value)
+
+    const reg = new RegExp(e.target.value)
+    setSearchedCards(
+      userCards.filter(
+        (card) => reg.test(card.name) || reg.test(card.company) || reg.test(card.category)
+      )
+    )
   }
+
   return (
     <SearchBar>
-      <input type="text" placeholder="찾고 싶은 카드를 검색하세요" />
+      <input
+        value={searchVal}
+        onChange={handleInputChange}
+        type="text"
+        placeholder="찾고 싶은 카드를 검색하세요"
+      />
     </SearchBar>
   )
 }

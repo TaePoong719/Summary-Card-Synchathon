@@ -3,8 +3,15 @@ import CardPrev from '../components/CardPrev'
 import '../style/Home.css'
 import StyledButton from '../components/StyledButton'
 import Search from '../components/Search'
+import { useEffect, useState } from 'react'
 
 const Home = ({ userCards, setUserCards }) => {
+  const [searchedCards, setSearchedCards] = useState(userCards)
+
+  useEffect(() => {
+    setSearchedCards(userCards)
+  }, [userCards])
+
   return (
     <Container>
       <HeadlineContainer>
@@ -24,10 +31,14 @@ const Home = ({ userCards, setUserCards }) => {
             <p>청약정보 {<br />} 불러오기</p>
           </StyledButton>
         </ButtonsContainer>
-        <Search />
+        <Search
+          userCards={userCards}
+          searchedCards={searchedCards}
+          setSearchedCards={setSearchedCards}
+        />
       </HeadlineContainer>
       <CardContainer>
-        {userCards.map((card) => {
+        {searchedCards.map((card) => {
           return <CardPrev card={card} key={card.cardId} />
         })}
       </CardContainer>
