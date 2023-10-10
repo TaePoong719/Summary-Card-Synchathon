@@ -1,14 +1,26 @@
 import styled from 'styled-components'
 import CardPrev from '../components/CardPrev'
 import '../style/Home.css'
-import Button from '../components/Button'
+import StyledButton from '../components/StyledButton'
 import Search from '../components/Search'
 
 const Home = ({ userCards, setUserCards }) => {
   return (
     <div>
-      <Button>내 보험 {<br />} 불러오기 </Button>
-      <Button>청약정보 {<br />} 불러오기 </Button>
+      <StyledButton
+        onClickHandler={() => {
+          console.log('내 보험 불러오기')
+        }}
+      >
+        <p>내 보험 {<br />} 불러오기</p>
+      </StyledButton>
+      <StyledButton
+        onClickHandler={() => {
+          console.log('청약정보 불러오기')
+        }}
+      >
+        <p>청약정보 {<br />} 불러오기</p>
+      </StyledButton>
       <Search />
       <CardContainer>
         {userCards.map((card) => {
