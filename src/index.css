@@ -1,6 +1,7 @@
 html {
   font-size: 16px;
   --main-color: #5289ff;
+  --main-color-50: rgba(82, 137, 255, 0.5);
   --main-black: #171717;
 }
 

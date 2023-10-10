@@ -22,30 +22,28 @@ const Header = () => {
           <Logo src={`${import.meta.env.BASE_URL}logo_with_finset.svg`} alt="logo" />
         </Link>
         {user?.displayName ? (
-          <>
-            <div className="header__user-name">
-              <p
-                onClick={() => {
-                  setDisplayUserInfo((prev) => !prev)
-                }}
-              >
-                {sliceStr(user.displayName, 7)}님
-              </p>
-              <div className="header__user-info">
-                {displayUserInfo ? <UserInfo handlerLogout={handlerLogout} user={user} /> : <></>}
-              </div>
-              {displayUserInfo ? (
-                <div
-                  onClick={() => {
-                    setDisplayUserInfo(false)
-                  }}
-                  className="header__user-info-block"
-                ></div>
-              ) : (
-                <></>
-              )}
+          <div className="header__user-name">
+            <p
+              onClick={() => {
+                setDisplayUserInfo((prev) => !prev)
+              }}
+            >
+              {sliceStr(user.displayName, 7)}님
+            </p>
+            <div className="header__user-info">
+              {displayUserInfo ? <UserInfo handlerLogout={handlerLogout} user={user} /> : <></>}
             </div>
-          </>
+            {displayUserInfo ? (
+              <div
+                onClick={() => {
+                  setDisplayUserInfo(false)
+                }}
+                className="header__user-info-block"
+              ></div>
+            ) : (
+              <></>
+            )}
+          </div>
         ) : (
           <Link to={`/login`}>
             <h3>로그인</h3>
