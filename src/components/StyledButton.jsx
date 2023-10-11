@@ -1,15 +1,14 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const StyledButton = ({ children, onClickHandler }) => {
-  return <Button onClick={onClickHandler}>{children}</Button>
+  return <Button children={children} onClick={onClickHandler} />
 }
 
 const Button = styled.button`
   border-radius: 5px;
   height: 50px;
   width: 110px;
-  margin: 0 10px;
   cursor: pointer;
   p {
     margin: 0 auto;

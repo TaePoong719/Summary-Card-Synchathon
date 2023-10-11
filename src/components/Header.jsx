@@ -2,18 +2,9 @@ import styled from 'styled-components'
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../provider/userContext'
-import { signOut } from 'firebase/auth'
-import { auth } from '../../firebase'
-import UserInfo from './UserInfo'
 
 const Header = () => {
   const user = useContext(AuthContext)
-  const [displayUserInfo, setDisplayUserInfo] = useState(false)
-
-  const handlerLogout = () => {
-    setDisplayUserInfo(false)
-    signOut(auth)
-  }
 
   return (
     <Container>
@@ -30,24 +21,9 @@ const Header = () => {
             >
               {sliceStr(user.displayName, 7)}님
             </p>
-            <div className="header__user-info">
-              {displayUserInfo ? <UserInfo handlerLogout={handlerLogout} user={user} /> : <></>}
-            </div>
-            {displayUserInfo ? (
-              <div
-                onClick={() => {
-                  setDisplayUserInfo(false)
-                }}
-                className="header__user-info-block"
-              ></div>
-            ) : (
-              <></>
-            )}
           </div>
         ) : (
-          <Link to={`/login`}>
-            <h3>로그인</h3>
-          </Link>
+          <></>
         )}
       </InnerContainer>
     </Container>
@@ -68,6 +44,7 @@ const InnerContainer = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
+  padding: 0 10px;
   align-items: center;
   position: relative;
 `
@@ -89,21 +66,6 @@ const Container = styled.nav`
     justify-content: flex-end;
     margin-right: 3rem;
     gap: 20px;
-  }
-  .header__user-info {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    z-index: 20;
-  }
-  .header__user-info-block {
-    position: fixed;
-    z-index: 19;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
   }
 `
 

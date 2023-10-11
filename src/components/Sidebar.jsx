@@ -1,59 +1,145 @@
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
+import { Mobile, SmallMobile } from '../utils/responsive'
 
 const Sidebar = ({ userCards, setSearchedCards }) => {
-  const [activeCategory, setActiveCategory] = useState('전체보기')
+  const [activeCategory, setActiveCategory] = useState('전체')
+  const [displaySidebar, setDisplaySidebar] = useState(false)
+  const categories = ['전체', '부동산', '보험', '은행', '증권', '기타']
   const onClickHandler = useCallback((category) => {
     setActiveCategory(category)
-    if (category === '전체보기') {
+    if (category === '전체') {
       setSearchedCards(userCards)
+      setDisplaySidebar(false)
     } else {
       setSearchedCards(userCards.filter((card) => card.category === category))
+      setDisplaySidebar(false)
     }
   })
-  return (
-    <Container>
-      <SidebarList>
-        <ListItem
-          className={activeCategory === '전체보기' ? 'active' : ''}
-          onClick={() => onClickHandler('전체보기')}
+
+  const isResponsiveSidebar = Mobile() || SmallMobile()
+
+  if (isResponsiveSidebar) {
+    return (
+      <MobileContainer>
+        {/*Inner Container 부분이 움직입니다, MobileContainer 부분은 움직이지 않고, 모바일 사이드바 렌더링 시 나타납니다 */}
+        <MobileInnerContainer $displaysidebar={displaySidebar ? 'true' : 'false'}>
+          <div
+            className="header__mobile-close-wrap"
+            onClick={() => {
+              setDisplaySidebar(false)
+            }}
+          >
+            <img src={`${import.meta.BASE_URL}icon_close.svg`} alt="닫기 버튼" />
+          </div>
+          <SidebarList>
+            {categories.map((name) => {
+              return (
+                <MobileListItem
+                  key={name}
+                  className={activeCategory === `${name}` ? 'active' : ''}
+                  onClick={() => onClickHandler(`${name}`)}
+                >
+                  {name}카드
+                </MobileListItem>
+              )
+            })}
+          </SidebarList>
+        </MobileInnerContainer>
+        <div
+          className="sidebar__openSidebar-icon"
+          onClick={() => setDisplaySidebar((prev) => !prev)}
         >
-          전체보기
-        </ListItem>
-        <ListItem
-          className={activeCategory === '부동산' ? 'active' : ''}
-          onClick={() => onClickHandler('부동산')}
-        >
-          부동산카드
-        </ListItem>
-        <ListItem
-          className={activeCategory === '보험' ? 'active' : ''}
-          onClick={() => onClickHandler('보험')}
-        >
-          보험카드
-        </ListItem>
-        <ListItem
-          className={activeCategory === '은행' ? 'active' : ''}
-          onClick={() => onClickHandler('은행')}
-        >
-          은행카드
-        </ListItem>
-        <ListItem
-          className={activeCategory === '증권' ? 'active' : ''}
-          onClick={() => onClickHandler('증권')}
-        >
-          증권카드
-        </ListItem>
-        <ListItem
-          className={activeCategory === '기타' ? 'active' : ''}
-          onClick={() => onClickHandler('기타')}
-        >
-          기타카드
-        </ListItem>
-      </SidebarList>
-    </Container>
-  )
+          <img src={`${import.meta.env.BASE_URL}icon_list.svg`} alt="사이드바 열기 버튼" />
+        </div>
+      </MobileContainer>
+    )
+  } else {
+    return (
+      <Container>
+        <SidebarList>
+          {categories.map((name) => {
+            return (
+              <ListItem
+                key={name}
+                className={activeCategory === `${name}` ? 'active' : ''}
+                onClick={() => onClickHandler(`${name}`)}
+              >
+                {name}카드
+              </ListItem>
+            )
+          })}
+        </SidebarList>
+      </Container>
+    )
+  }
 }
+
+const MobileContainer = styled.aside`
+  & {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+  }
+  .sidebar__openSidebar-icon {
+    z-index: 13;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--main-color);
+    cursor: pointer;
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+`
+
+const MobileInnerContainer = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 15;
+  background-color: #fff;
+  left: ${(props) => (props.$displaysidebar === 'true' ? '0px;' : '-100%;')};
+  transition: all 1s ease-in-out;
+
+  .header__mobile-close-wrap {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+`
+
+const MobileListItem = styled.li`
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 140%;
+  margin-left: 20px;
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover,
+  &.active {
+    color: var(--main-color);
+  }
+`
 
 const Container = styled.aside`
   position: fixed;

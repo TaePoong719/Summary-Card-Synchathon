@@ -1,13 +1,14 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Landing from './pages/Landing'
-import Home from './pages/Home.jsx'
+import Home from './pages/Home'
 import Card from './components/Card.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/Signup.jsx'
 import Layout from './Layout.jsx'
+import Detail from './pages/PdfDetail'
 import { useContext, useState } from 'react'
 import { AuthContext } from './provider/userContext'
-
+import { PC, Tablet, Mobile, SmallMobile } from './utils/responsive'
 function App() {
   /* userCards는 유저의 카드, searchedCards는 유저가 카테고리를 클릭하거나, 검색을 했을 경우 화면에 보여지는 카드  */
   const [userCards, setUserCards] = useState(testUserCard)
@@ -15,7 +16,6 @@ function App() {
   // 모달 배경
   const location = useLocation()
   const background = location.state && location.state.background
-
   const user = useContext(AuthContext)
 
   // 서버에서 유저 카드 정보 가져오기 데모 코드 : 실제론 fetch 말고 axios 사용하는게 좋을 듯
@@ -56,7 +56,7 @@ function App() {
             }
           />
           <Route path="card/:id" element={<Card setUserCards={setUserCards} />} />
-          {/* <Route path="pdf_detail" element={<Detail />}></Route> */}
+          <Route path="pdf_detail" element={<Detail />}></Route>
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
@@ -67,7 +67,7 @@ function App() {
             path="card/:cardId"
             element={<Card userCards={userCards} setUserCards={setUserCards} />}
           ></Route>
-          {/* <Route path="pdf_detail" element={<Detail />}></Route> */}
+          <Route path="pdf_detail" element={<Detail />}></Route>
         </Routes>
       )}
     </div>

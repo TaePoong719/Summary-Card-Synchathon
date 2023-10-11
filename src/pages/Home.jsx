@@ -5,6 +5,7 @@ import StyledButton from '../components/StyledButton'
 import Search from '../components/Search'
 import { useEffect, useState } from 'react'
 import CardPrevAdd from '../components/CardPrevAdd'
+import { TabletMin } from '../utils/responsive'
 
 const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
   useEffect(() => {
@@ -48,10 +49,14 @@ const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
 
 const Container = styled.section`
   padding: 20px;
+  @media (max-width: ${TabletMin}) {
+    padding: 0;
+  }
 `
 
 const ButtonsContainer = styled.div`
   display: flex;
+  gap: 20px;
 `
 
 const HeadlineContainer = styled.div`
@@ -60,10 +65,11 @@ const HeadlineContainer = styled.div`
   justify-content: space-between;
   margin: 10px 0 20px 0;
   padding-right: 30px;
+  flex-wrap: wrap;
 `
 
 const CardContainer = styled.section`
-  padding: 10px;
+  padding-top: 20px;
   box-sizing: border-box;
   display: flex;
   flex-flow: wrap;

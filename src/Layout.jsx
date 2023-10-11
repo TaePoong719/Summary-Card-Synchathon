@@ -3,15 +3,23 @@ import Header from './components/Header'
 import styled from 'styled-components'
 import Sidebar from './components/Sidebar'
 import AuthProvider from './provider/userProvider'
+import { Mobile, SmallMobile } from './utils/responsive'
 
 const Layout = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
+  /* Mobile, SmallMobile 훅이 변할 때 마다 컴포넌트가 다시 재 렌더링 될텐데 이때 오류가 발생함 왜?*/
+  let isResponsiveSidebar = 'false'
+  const isResponsive = Mobile() || SmallMobile()
+  if (isResponsive) {
+    isResponsiveSidebar = 'true'
+  }
+
   return (
     <>
       <AuthProvider>
         <Header />
-        <Container>
+        <Container $isResponsive={isResponsiveSidebar}>
           <Sidebar userCards={userCards} setSearchedCards={setSearchedCards} />
-          <InnerContainer>
+          <InnerContainer $isResponsive={isResponsiveSidebar}>
             <Outlet />
           </InnerContainer>
         </Container>
@@ -22,10 +30,19 @@ const Layout = ({ userCards, setUserCards, searchedCards, setSearchedCards }) =>
 
 const InnerContainer = styled.div`
   box-sizing: border-box;
-  padding: 20px;
+  padding: ${(props) => {
+    return props.$isResponsive === 'true' ? '0px' : '20px'
+  }};
   position: relative;
-  left: 200px;
-  width: calc(100% - 200px);
+  left: ${(props) => {
+    return props.$isResponsive === 'true' ? '0px' : '200px'
+  }};
+  width: calc(
+    100% -
+      ${(props) => {
+        return props.$isResponsive === 'true' ? '0px' : '200px'
+      }}
+  );
 `
 
 const Container = styled.main`
@@ -33,7 +50,6 @@ const Container = styled.main`
   box-sizing: border-box;
   max-width: 1200px;
   height: calc(100% - 60px);
-  padding: 0 20px;
   position: relative;
   top: 60px;
 `

@@ -6,7 +6,6 @@ const Search = ({ userCards, setSearchedCards }) => {
   const [searchVal, setSearchVal] = useState('')
   const val = useDebounce(searchVal, 500)
 
-  /* 추후 검색 기능 보강 해야할 듯 */
   useEffect(() => {
     const reg = new RegExp(trimmingStr(val))
     setSearchedCards(
@@ -44,7 +43,7 @@ const SearchBar = styled.div`
     height: 50px;
     position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     border-radius: 5px;
     input {
       width: 100%;
@@ -56,6 +55,7 @@ const SearchBar = styled.div`
       background-size: 14px;
       background-repeat: no-repeat;
       background-position: right 10px bottom 50%;
+      box-sizing: border-box;
       &::placeholder {
         color: var(--main-color-50);
       }
