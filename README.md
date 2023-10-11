@@ -17,7 +17,7 @@
 
 2명이서 진행되는 소규모 팀이다 보니 Dev브랜치에서의 Pull과 Push를 위주로 진행
 
-- Containers : 배포 브랜치
+- Main : 배포 브랜치
 - Dev : 작업 브랜치
 
 ## Prettier & EsLint 설정
@@ -50,6 +50,6 @@ Continuous Integration : Dev의 에러가 없을 경우 Main으로 자동 통합
 
 ### Netlify 사용
 
-Continuous Delivery : Containers 브랜치 자동 배포
+Continuous Delivery : Main 브랜치 자동 배포
 
 [배포링크](https://summary-card-synchathon.netlify.app/)
