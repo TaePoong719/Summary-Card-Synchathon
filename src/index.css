@@ -24,12 +24,12 @@ html {
 
 body {
   margin: 0;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
+  display: none;
 }
 
 ul {

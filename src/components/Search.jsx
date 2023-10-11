@@ -1,21 +1,24 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDebounce } from '../hooks/useDebounce'
 
-const Search = ({ userCards, setSearchedCards, searchedCards }) => {
+const Search = ({ userCards, setSearchedCards }) => {
   const [searchVal, setSearchVal] = useState('')
+  const val = useDebounce(searchVal, 500)
 
-  const handleInputChange = (e) => {
-    /* 검색 로직 => 화면에 보이는 요소들을 변경*/
-    setSearchVal(e.target.value)
-
-    const reg = new RegExp(e.target.value)
+  /* 추후 검색 기능 보강 해야할 듯 */
+  useEffect(() => {
+    const reg = new RegExp(val)
     setSearchedCards(
       userCards.filter(
         (card) => reg.test(card.name) || reg.test(card.company) || reg.test(card.category)
       )
     )
-  }
+  }, [val])
+
+  const handleInputChange = useCallback((e) => {
+    setSearchVal(e.target.value)
+  })
 
   return (
     <SearchBar>
