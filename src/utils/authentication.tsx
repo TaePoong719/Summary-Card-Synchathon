@@ -31,7 +31,7 @@ export const specificErrorContent = (code: string) => {
 
 export class CustomError extends Error {
   public code
-  constructor(code: string, message: string) {
+  constructor(code, message) {
     super(message)
     this.code = code
   }

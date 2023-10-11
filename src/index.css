@@ -26,6 +26,7 @@ body {
   margin: 0;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  transition: all 0.5s ease-in-out;
 }
 
 body::-webkit-scrollbar {
