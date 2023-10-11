@@ -8,16 +8,23 @@ const Search = ({ userCards, setSearchedCards }) => {
 
   /* 추후 검색 기능 보강 해야할 듯 */
   useEffect(() => {
-    const reg = new RegExp(val)
+    const reg = new RegExp(trimmingStr(val))
     setSearchedCards(
       userCards.filter(
-        (card) => reg.test(card.name) || reg.test(card.company) || reg.test(card.category)
+        (card) =>
+          reg.test(trimmingStr(card.name)) ||
+          reg.test(trimmingStr(card.company.trim())) ||
+          reg.test(trimmingStr(card.category.trim()))
       )
     )
   }, [val])
 
   const handleInputChange = useCallback((e) => {
     setSearchVal(e.target.value)
+  })
+
+  const trimmingStr = useCallback((str) => {
+    return str.trim().replaceAll(' ', '')
   })
 
   return (
