@@ -28,20 +28,18 @@ const Header = () => {
         <Link to={`/home`}>
           <Logo src={`${import.meta.env.BASE_URL}logo_with_finset.svg`} alt="logo" />
         </Link>
-        {user?.displayName ? (
-          <div className="header__user-name">
-            <p>{sliceStr(user.displayName, 7)}님</p>
-          </div>
-        ) : (
-          <></>
-        )}
+        <UserImg src={user.photoURL} alt={user.displayname} />
       </InnerContainer>
     </Container>
   )
 }
-const sliceStr = (str, n) => {
-  return str.length >= n ? str.slice(0, n) + '...' : str
-}
+
+const UserImg = styled.img`
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 0 10px 0 0;
+`
 
 const Logo = styled.img`
   width: 120px;
