@@ -1,10 +1,26 @@
 import styled from 'styled-components'
-import { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../provider/userContext'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../../firebase'
 
 const Header = () => {
   const user = useContext(AuthContext)
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        if (pathname === '/') {
+          navigate('/home')
+        }
+      } else {
+        navigate('/')
+      }
+    })
+  }, [])
 
   return (
     <Container>
@@ -14,13 +30,7 @@ const Header = () => {
         </Link>
         {user?.displayName ? (
           <div className="header__user-name">
-            <p
-              onClick={() => {
-                setDisplayUserInfo((prev) => !prev)
-              }}
-            >
-              {sliceStr(user.displayName, 7)}님
-            </p>
+            <p>{sliceStr(user.displayName, 7)}님</p>
           </div>
         ) : (
           <></>

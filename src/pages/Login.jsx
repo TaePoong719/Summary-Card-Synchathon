@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { auth } from '../../firebase'
 import { Link } from 'react-router-dom'
@@ -6,11 +6,13 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import '../style/Authentication.css'
 import { specificErrorContent } from '../utils/authentication'
+import { AuthContext } from '../provider/userContext'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
   const navigate = useNavigate()
+  const user = useContext(AuthContext)
 
   const handleEmail = (e) => {
     e.preventDefault()
@@ -32,6 +34,12 @@ const Login = () => {
       alert(specificErrorContent(e.code.split('/')[1]))
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      navigate('/home')
+    }
+  })
 
   return (
     <Container>
