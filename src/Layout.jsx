@@ -19,7 +19,7 @@ const Layout = ({ userCards, setUserCards, searchedCards, setSearchedCards }) =>
 
   useEffect(() => {
     if (!user) {
-      navigate('/login')
+      navigate('/')
     }
   })
 
