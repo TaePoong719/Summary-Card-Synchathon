@@ -9,13 +9,15 @@ const Header = () => {
   const user = useContext(AuthContext)
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const [userData, setUserData] = useState({})
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user !== undefined) {
         if (pathname === '/') {
           navigate('/home')
         }
+        setUserData(user)
       } else {
         navigate('/')
       }
@@ -28,7 +30,7 @@ const Header = () => {
         <Link to={`/home`}>
           <Logo src={`${import.meta.env.BASE_URL}logo_with_finset.svg`} alt="logo" />
         </Link>
-        <UserImg src={user.photoURL} alt={user.displayname} />
+        <UserImg src={userData.photoURL} alt={userData.displayname} />
       </InnerContainer>
     </Container>
   )

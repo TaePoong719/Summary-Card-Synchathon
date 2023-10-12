@@ -11,7 +11,10 @@ const Landing = () => {
 
   const handleAuth = async () => {
     try {
-      if (!user) {
+      console.log(user)
+      if (user !== undefined) {
+        localStorage.setItem('userData', JSON.stringify(user))
+      } else {
         await signInWithPopup(auth, provider)
       }
       navigate('/home')
