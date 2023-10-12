@@ -1,29 +1,37 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import Header from './components/Header'
 import styled from 'styled-components'
 import Sidebar from './components/Sidebar'
-import AuthProvider from './provider/userProvider'
-import { Mobile, SmallMobile } from './utils/responsive'
+import { MobileResponsive } from './utils/responsive'
+import { useContext, useEffect } from 'react'
+import { AuthContext } from './provider/userContext'
 
 const Layout = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
   /* Mobile, SmallMobile 훅이 변할 때 마다 컴포넌트가 다시 재 렌더링 될텐데 이때 오류가 발생함 왜?*/
   let isResponsiveSidebar = 'false'
-  const isResponsive = Mobile() || SmallMobile()
+  const isResponsive = MobileResponsive()
+  const user = useContext(AuthContext)
+
   if (isResponsive) {
     isResponsiveSidebar = 'true'
   }
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login')
+    }
+  })
 
   return (
     <>
-      <AuthProvider>
-        <Header />
-        <Container $isResponsive={isResponsiveSidebar}>
-          <Sidebar userCards={userCards} setSearchedCards={setSearchedCards} />
-          <InnerContainer $isResponsive={isResponsiveSidebar}>
-            <Outlet />
-          </InnerContainer>
-        </Container>
-      </AuthProvider>
+      <Header />
+      <Container $isResponsive={isResponsiveSidebar}>
+        <Sidebar userCards={userCards} setSearchedCards={setSearchedCards} />
+        <InnerContainer $isResponsive={isResponsiveSidebar}>
+          <Outlet />
+        </InnerContainer>
+      </Container>
     </>
   )
 }

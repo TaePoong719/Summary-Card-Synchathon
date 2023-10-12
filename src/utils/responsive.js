@@ -38,6 +38,13 @@ export const SmallMobile = () => {
   return isSmallMobile
 }
 
+export const MobileResponsive = () => {
+  const isMobile = useMediaQuery({
+    query: '(max-width:479px)',
+  })
+  return isMobile
+}
+
 export const LargePCMin = 1024
 export const PCMin = 768
 export const TabletMin = 480

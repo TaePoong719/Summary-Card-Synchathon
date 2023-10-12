@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Mobile, SmallMobile } from '../utils/responsive'
+import { MobileResponsive } from '../utils/responsive'
 
 const Sidebar = ({ userCards, setSearchedCards }) => {
   const [activeCategory, setActiveCategory] = useState('전체')
@@ -17,7 +17,7 @@ const Sidebar = ({ userCards, setSearchedCards }) => {
     }
   })
 
-  const isResponsiveSidebar = Mobile() || SmallMobile()
+  const isResponsiveSidebar = MobileResponsive()
 
   if (isResponsiveSidebar) {
     return (
