@@ -30,7 +30,7 @@ const Sidebar = ({ userCards, setSearchedCards }) => {
               setDisplaySidebar(false)
             }}
           >
-            <img src={`${import.meta.BASE_URL}icon_close.svg`} alt="닫기 버튼" />
+            <img src={`${import.meta.env.BASE_URL}icon_close.svg`} alt="닫기 버튼" />
           </div>
           <SidebarList>
             {categories.map((name) => {
