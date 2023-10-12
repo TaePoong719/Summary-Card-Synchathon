@@ -5,8 +5,8 @@ import Card from './components/Card.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/Signup.jsx'
 import Layout from './Layout.jsx'
-import Detail from './pages/PdfDetail'
-import { useContext, useEffect, useState } from 'react'
+import Detail from './pages/Detail.jsx'
+import { useEffect, useState } from 'react'
 import AuthProvider from './provider/userProvider'
 import axios from 'axios'
 
@@ -68,7 +68,7 @@ function App() {
             }
           />
           <Route path="card/:id" element={<Card setUserCards={setUserCards} />} />
-          <Route path="pdf_detail" element={<Detail />}></Route>
+          <Route path="detail" element={<Detail />}></Route>
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
@@ -79,7 +79,7 @@ function App() {
             path="card/:cardId"
             element={<Card userCards={userCards} setUserCards={setUserCards} />}
           ></Route>
-          <Route path="pdf_detail" element={<Detail />}></Route>
+          <Route path="detail" element={<Detail />}></Route>
         </Routes>
       )}
     </AuthProvider>
