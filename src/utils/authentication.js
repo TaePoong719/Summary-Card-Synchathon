@@ -1,4 +1,4 @@
-export const specificErrorContent = (code: string) => {
+export const specificErrorContent = (code) => {
   switch (code) {
     case 'email-already-exists':
       return '제공된 이메일을 기존 사용자가 이미 사용 중입니다. 각 사용자마다 이메일이 고유해야 합니다.'
@@ -30,8 +30,7 @@ export const specificErrorContent = (code: string) => {
 }
 
 export class CustomError extends Error {
-  public code
-  constructor(code: string, message: string) {
+  constructor(code, message) {
     super(message)
     this.code = code
   }
