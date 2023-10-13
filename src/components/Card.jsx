@@ -19,13 +19,7 @@ const Card = ({ userCards, setUserCards }) => {
 
   const [CompanyName, setCompanyName] = useState(card.company)
   const [CardName, setCardName] = useState(card.name)
-  const [CardSummary, setCardSummary] = useState(
-    card.summary
-      .trim()
-      .split('\n')
-      .map((line) => `· ${line}`)
-      .join('\n')
-  )
+  const [CardSummary, setCardSummary] = useState('')
 
   const [selectedColorIndex, setSelectedColorIndex] = useState(9)
   const CardColorList = [
@@ -40,20 +34,33 @@ const Card = ({ userCards, setUserCards }) => {
     '#D9D9D9',
     '#D9D9D9',
   ]
-  const modalStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center', // 추가된 코드
+
+  const modalBackgroundStyle = {
+    width: '100%',
     maxWidth: '500px',
-    minHeight: '600px',
-    height: '100%',
+    minHeight: '700px',
+    maxHeight: '100%' /* 원하는 높이, 100%보다 작게 설정 */,
+    overflow: 'visible' /* 스크롤이 필요할 때만 표시 */,
+    margin: '0',
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
     backgroundColor: CardModifying ? CardColorList[selectedColorIndex] : card.cardColor,
+    borderRadius: '20px',
+    zIndex: '-1',
   }
 
-  function resize(obj) {
-    obj.style.height = '1px'
-    obj.style.height = 12 + obj.scrollHeight + 'px'
+  const textareaRef = useRef(null)
+
+  const DEFAULT_HEIGHT = 0 // 이 값을 필요에 맞게 조절하세요
+  const handleTextChange = (e) => {
+    const value = e.target.value
+    setCardSummary(value) // 내용 업데이트
+    const textarea = textareaRef.current
+    textarea.style.height = 0
+    textarea.style.height = DEFAULT_HEIGHT + textarea.scrollHeight + 'px'
   }
 
   // CardEdit 요약하기 함수
@@ -83,18 +90,20 @@ const Card = ({ userCards, setUserCards }) => {
   }
 
   return (
-    <div>
+    <div className="ModalContainer">
       <Modal>
-        <div className="CardDetailDiv" style={modalStyle}>
+        {/*modal border-radius를 위한 배경. */}
+        <div style={modalBackgroundStyle}></div>
+        <div className="CardDetailDiv">
           <div className="UpperBox">
-            <div className="ImgBox">
-              <img
-                src={`${import.meta.env.BASE_URL}company/${CompanyName}.svg`}
-                alt={`${CompanyName}로고`}
-                style={{ backgroundColor: 'white' }}
-              />
-            </div>
             <div className="InnerBox">
+              <div className="ImgBox">
+                <img
+                  src={`${import.meta.env.BASE_URL}company/${CompanyName}.svg`}
+                  alt={`${CompanyName}로고`}
+                  style={{ backgroundColor: 'white' }}
+                />
+              </div>
               <div className="CompanySelect">
                 <select
                   style={
@@ -139,18 +148,33 @@ const Card = ({ userCards, setUserCards }) => {
               </div>
             </div>
           </div>
-          <div className="PdfInput">
-            <textarea
-              name="CardSummary"
-              placeholder="PDF 입력"
-              required
-              disabled={!CardModifying}
-              value={CardSummary}
-              onKeyDown="resize(this)"
-              onKeyUp="resize(this)"
-              style={{ overflow: 'hidden' }} // 스크롤바 제거
-            />
-          </div>
+          {!CardModifying && (
+            <div className="CardSummary">
+              <span>
+                {' '}
+                {card.summary
+                  .trim()
+                  .split('\n')
+                  .map((line) => `· ${line}`)
+                  .join('\n')}
+              </span>
+            </div>
+          )}
+
+          {CardModifying && (
+            <div className="PdfInput">
+              <textarea
+                name="CardSummary"
+                placeholder="PDF 입력"
+                required
+                rows={1}
+                value={CardSummary}
+                ref={textareaRef}
+                onChange={handleTextChange}
+                style={{ overflowY: 'hidden' }} // overflowY를 hidden으로 설정하여 스크롤바가 나타나지 않게 합니다.
+              />
+            </div>
+          )}
 
           {CardModifying && (
             <div className="Palette">
