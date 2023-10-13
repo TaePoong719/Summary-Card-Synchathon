@@ -1,10 +1,10 @@
 import '../style/Modal.css'
 
 // eslint-disable-next-line react/prop-types
-const Modal = ({ children }) => {
+const Modal = ({ children, housing }) => {
   return (
     <div className="modalDiv">
-      <div className="modal">{children}</div>
+      <div className={housing ? 'modalHousing' : 'modal'}>{children}</div>
     </div>
   )
 }

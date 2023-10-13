@@ -9,6 +9,7 @@ import Detail from './pages/Detail.jsx'
 import { useEffect, useState } from 'react'
 import AuthProvider from './provider/userProvider'
 import axios from 'axios'
+import CardHousing from './components/CardHousing.jsx'
 
 function App() {
   /* userCards는 유저의 카드, searchedCards는 유저가 카테고리를 클릭하거나, 검색을 했을 경우 화면에 보여지는 카드  */
@@ -67,7 +68,8 @@ function App() {
               />
             }
           />
-          <Route path="card/:id" element={<Card setUserCards={setUserCards} />} />
+          <Route path="card/:cardId" element={<Card setUserCards={setUserCards} />} />
+          <Route path="housing" element={<CardHousing setUserCards={setUserCards} />} />
           <Route path="detail" element={<Detail />}></Route>
         </Route>
         <Route path="login" element={<Login />} />
@@ -75,10 +77,12 @@ function App() {
       </Routes>
       {background && (
         <Routes>
+          res
           <Route
             path="card/:cardId"
             element={<Card userCards={userCards} setUserCards={setUserCards} />}
           ></Route>
+          <Route path="housing" element={<CardHousing setUserCards={setUserCards} />} />
           <Route path="detail" element={<Detail />}></Route>
         </Routes>
       )}

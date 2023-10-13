@@ -1,0 +1,44 @@
+.ModalContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.RegionSelect,
+.NameSelect {
+  min-width: 150px;
+  font-size: 20px; /* 폰트 크기 설정 */
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  appearance: none; /* 표준 속성 - 모든 브라우저에서 select의 기본 스타일 제거 */
+  -webkit-appearance: none; /* 크롬, 사파리 등 웹킷 브라우저용 */
+  -moz-appearance: none; /* 파이어폭스용 */
+  outline: none; /* 포커스 상태에서의 외곽선 제거 */
+  text-align: center; /* 대부분의 브라우저에서의 텍스트 중앙 정렬 */
+  text-align-last: center;
+}
+
+.BtnContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px; /* Adjust this value to increase or decrease the side spacing */
+}
+
+.housingCardBtn {
+  font-size: 17px;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  min-width: 110px;
+  min-height: 50px;
+  background-color: white;
+  color: #5289ff;
+  border: none;
+  border-radius: 10px;
+  margin-right: 10px; /* Adding some space between the buttons */
+  cursor: pointer;
+}

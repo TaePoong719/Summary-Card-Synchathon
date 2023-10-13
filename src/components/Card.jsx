@@ -65,33 +65,33 @@ const Card = ({ userCards, setUserCards }) => {
 
   // CardEdit 요약하기 함수
   const SummaryPdf = () => {
-    /*
-        회사명, 카드이름, 요약내용 모두 빈칸이 아니면 ->
-         */
-    const cardIndex = userCards.findIndex((card) => card.cardId === cardId)
+    // 회사명, 카드이름, 요약내용 모두 빈칸이 아니면 ->
+    if (CompanyName !== '' && CardName !== '' && CardSummary !== '') {
+      const cardIndex = userCards.findIndex((card) => card.cardId === cardId)
 
-    // 해당 인덱스의 객체를 복제하고, 원하는 속성들을 업데이트
-    const updatedCard = {
-      ...userCards[cardIndex],
-      name: CardName,
-      company: CompanyName,
-      summary: CardSummary,
+      // 해당 인덱스의 객체를 복제하고, 원하는 속성들을 업데이트
+      const updatedCard = {
+        ...userCards[cardIndex],
+        name: CardName,
+        company: CompanyName,
+        summary: CardSummary,
+      }
+
+      // 전체 userCards 배열을 복제하고, 해당 인덱스의 객체를 업데이트된 객체로 변경
+      const updatedCards = [
+        ...userCards.slice(0, cardIndex),
+        updatedCard,
+        ...userCards.slice(cardIndex + 1),
+      ]
+      // 상태를 업데이트
+      setUserCards(updatedCards)
+      navigate('/home')
     }
-
-    // 전체 userCards 배열을 복제하고, 해당 인덱스의 객체를 업데이트된 객체로 변경
-    const updatedCards = [
-      ...userCards.slice(0, cardIndex),
-      updatedCard,
-      ...userCards.slice(cardIndex + 1),
-    ]
-    // 상태를 업데이트
-    setUserCards(updatedCards)
-    navigate('/home')
   }
 
   return (
     <div className="ModalContainer">
-      <Modal>
+      <Modal housing={false}>
         {/*modal border-radius를 위한 배경. */}
         <div style={modalBackgroundStyle}></div>
         <div className="CardDetailDiv">
@@ -113,6 +113,7 @@ const Card = ({ userCards, setUserCards }) => {
                   }
                   defaultValue={CompanyName}
                   onChange={(e) => setCompanyName(e.target.value)}
+                  className="CompanySelectDiv"
                 >
                   {!CardModifying && <option value={CompanyName}>{CompanyName}</option>}
                   {CardModifying && (

@@ -27,6 +27,18 @@
   overflow: visible;
 }
 
+.modalHousing {
+  background-color: white;
+  top: 3%;
+  width: 100%;
+  max-width: 400px;
+  min-height: 500px;
+  border-radius: 20px;
+  position: relative;
+  z-index: 100;
+  overflow: visible;
+}
+
 @media (max-width: 768px) {
   .modal {
     overflow: visible; /* 유지 */
