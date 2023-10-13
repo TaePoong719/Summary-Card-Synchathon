@@ -12,17 +12,26 @@
   justify-content: center;
   align-items: center;
   position: fixed;
+  overflow: visible;
+  z-index: 100;
 }
 
 .modal {
+  top: 3%;
   width: 100%;
   max-width: 500px;
-  min-height: 600px; /* 최소 높이 설정 */
-  height: auto; /* 높이를 자동으로 설정하여 내용에 따라 조절 */
-  margin: 0; /* 마진을 0으로 설정하여 여백을 없앰 */
-  background-color: white;
+  min-height: 700px;
   border-radius: 20px;
   position: relative;
-  overflow: visible; /* 자식 요소가 modal을 벗어나도 표시되게 함 */
-  z-index: 1; /* 어떤 값이든 괜찮습니다. 여기서는 1을 예시로 사용했습니다. */
+  z-index: 100;
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    overflow: visible; /* 유지 */
+    width: 100%;
+    height: 100%;
+    top: 10%;
+  }
 }
