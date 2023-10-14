@@ -13,12 +13,11 @@ const Card = ({ userCards, setUserCards }) => {
   const state = useLocation().state
 
   // 모달 열고 닫는 함수
-  const modalRef = useRef()
+  const modalRef = useRef(null)
   const navigate = useNavigate()
 
   // 모달 닫기 함수
   const closeModal = () => {
-    console.log('event')
     navigate('/home')
   }
 
@@ -149,7 +148,7 @@ const Card = ({ userCards, setUserCards }) => {
 
   return (
     <div className="ModalContainer">
-      <Modal housing={false} ref={modalRef}>
+      <Modal ref={modalRef}>
         {/*modal border-radius를 위한 배경. */}
         <div style={modalBackgroundStyle}></div>
         <div className="CardDetailDiv">

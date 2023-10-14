@@ -1,14 +1,17 @@
 import '../style/Modal.css'
+import React, { forwardRef } from 'react'
 
 // eslint-disable-next-line react/prop-types
-const Modal = ({ children, housing }) => {
+const Modal = forwardRef(({ children }, ref) => {
   return (
     <div className="modalDiv">
-      <div style={{ height: '100px', width: '500px', position: 'relative', top: '0px' }}></div>
-      <div className={housing ? 'modalHousing' : 'modal'}>{children}</div>
-      <div style={{ height: '100px', width: '500px', position: 'relative', top: '0px' }}></div>
+      <div ref={ref} className="modal__inner">
+        <div style={{ height: '200px', width: '500px' }}></div>
+        <div className="modal">{children}</div>
+        <div style={{ height: '50px', width: '500px' }}></div>
+      </div>
     </div>
   )
-}
+})
 
 export default Modal

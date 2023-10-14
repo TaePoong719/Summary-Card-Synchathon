@@ -23,7 +23,7 @@ const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards, setLoa
           <StyledButton
             onClickHandler={() => CardInsurance({ userCards, setUserCards, setLoading })}
           >
-            <p>내 보험 불러오기</p>
+            <p>내 보험 {<br />}불러오기</p>
           </StyledButton>
 
           <Link to={'/housing'} state={{ background: location }}>
