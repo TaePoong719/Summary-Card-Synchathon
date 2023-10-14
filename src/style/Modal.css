@@ -5,7 +5,7 @@
 
 .modalDiv {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   top: 0;
   left: 0;
   right: 0;
@@ -13,6 +13,7 @@
   padding: 0;
   background-color: rgba(153, 153, 153, 0.5);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -22,8 +23,6 @@
 }
 
 .modal {
-  top: 5%;
-  margin-bottom: 5%;
   height: auto;
   width: 100%;
   max-width: 500px;

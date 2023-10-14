@@ -65,7 +65,7 @@ const Card = ({ userCards, setUserCards }) => {
 
   const modalBackgroundStyle = {
     width: '100%',
-    height: 'auto',
+    height: '100%',
     maxWidth: '500px',
     minHeight: '500px',
     overflow: 'visible' /* 스크롤이 필요할 때만 표시 */,
@@ -286,7 +286,6 @@ const Card = ({ userCards, setUserCards }) => {
           <div></div>
         </div>
       </Modal>
-      <div style={{ height: '300px' }}></div>
     </div>
   )
 }
