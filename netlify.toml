@@ -15,3 +15,8 @@ from = "/api/246/*"
   to = "https://2468280591.for-seoul.synctreengine.com/:splat"  
   status = 200
   force = true
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
