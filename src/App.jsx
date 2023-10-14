@@ -6,11 +6,12 @@ import Login from './pages/Login.jsx'
 import SignUp from './pages/Signup.jsx'
 import Layout from './Layout.jsx'
 import Detail from './pages/Detail.jsx'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import AuthProvider from './provider/userProvider'
 import axios from 'axios'
 import CardHousing from './components/CardHousing.jsx'
 import Loading from './components/Loading.jsx'
+import { AuthContext } from './provider/userContext'
 
 function App() {
   /* userCards는 유저의 카드, searchedCards는 유저가 카테고리를 클릭하거나, 검색을 했을 경우 화면에 보여지는 카드  */
@@ -20,6 +21,7 @@ function App() {
   const location = useLocation()
   const background = location.state && location.state.background
   const [loading, setLoading] = useState(false)
+  const user = useContext(AuthContext)
 
   // 서버에서 유저 카드 정보 가져오기 데모 코드 : 실제론 fetch 말고 axios 사용하는게 좋을 듯
   // useEffect(() => {
@@ -38,13 +40,28 @@ function App() {
         const res = await axios.get('/api/904/insurance_list', {
           headers: { 'Content-Type': 'application/json' },
         })
-        console.log(res)
+        console.log('보험정보', res)
       } catch (e) {
         console.log(e)
       }
     }
     fetchData()
   })
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await axios.post('api/850/login_get_card', {
+          uid: 'receaGGFLSVcHUroH',
+        })
+        console.log('유저카드정보', res)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchUserData()
+  }, [user])
 
   return (
     <div>
