@@ -4,12 +4,11 @@ import '../style/CardPrev.css'
 
 const CardPrev = ({ card }) => {
   const location = useLocation()
-  console.log(card)
   return (
     <Link
       to={`/card/${card.cardId}`}
       className="custom-link "
-      state={{ background: location, card: card }}
+      state={{ background: location, CardAdd: false, card: card }}
     >
       <Container $color={card.cardColor}>
         <div

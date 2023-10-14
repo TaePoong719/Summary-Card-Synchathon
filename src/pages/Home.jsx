@@ -6,66 +6,26 @@ import Search from '../components/Search'
 import { useEffect, useState } from 'react'
 import CardPrevAdd from '../components/CardPrevAdd'
 import { TabletMin } from '../utils/responsive'
-import axios from 'axios'
-import { v4 as uuidv4 } from 'uuid'
 import { Link, useLocation } from 'react-router-dom'
+import CardInsurance from '../components/CardInsurnace.jsx'
 
-const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
+const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards, setLoading }) => {
   useEffect(() => {
     setSearchedCards(userCards)
   }, [userCards])
 
   const location = useLocation()
 
-  const getCurrentDate = () => {
-    const today = new Date()
-    const { getFullYear, getMonth, getDate } = today
-
-    const year = getFullYear.call(today)
-    const month = (getMonth.call(today) + 1).toString().padStart(2, '0')
-    const day = getDate.call(today).toString().padStart(2, '0')
-
-    return `${year}-${month}-${day}`
-  }
-
-  const getInsurance = async () => {
-    try {
-      const res = await axios.get('/api/904/insurance_list')
-      const cash = []
-      for (const r of res.data.result) {
-        cash.push({
-          cardId: uuidv4(),
-          name: r.상품이름,
-          category: '보험',
-          date: getCurrentDate(),
-          company: r.회사이름,
-          pdfLink: 'https://naver.com',
-          summary: `${r.보장혜택명}\n${r.회사제공혜택명}\n${r.계약시작일}\n${r.계약종료일}`,
-          cardColor: `#${Math.floor(Math.random() * 256)
-            .toString(16)
-            .padStart(2, '0')}${Math.floor(Math.random() * 256)
-            .toString(16)
-            .padStart(2, '0')}${Math.floor(Math.random() * 256)
-            .toString(16)
-            .padStart(2, '0')}`,
-        })
-      }
-
-      // 상태 업데이트
-      const updatedUserCards = [...userCards, ...cash]
-      setUserCards(updatedUserCards)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
   return (
     <Container>
       <HeadlineContainer>
         <ButtonsContainer>
-          <StyledButton onClickHandler={getInsurance}>
-            <p>내 보험 {<br />} 불러오기</p>
+          <StyledButton
+            onClickHandler={() => CardInsurance({ userCards, setUserCards, setLoading })}
+          >
+            <p>내 보험 불러오기</p>
           </StyledButton>
+
           <Link to={'/housing'} state={{ background: location }}>
             <StyledButton>
               <p>청약정보 {<br />} 불러오기</p>

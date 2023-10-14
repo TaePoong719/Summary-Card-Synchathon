@@ -1,0 +1,62 @@
+.loading {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  z-index: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.loadingdiv1 {
+  position: absolute;
+  border: 9px solid orange;
+  border-radius: 50%;
+  border-color: orange transparent transparent transparent;
+  width: 60px;
+  height: 60px;
+  animation: spinning 1s infinite;
+}
+
+.loadingdiv2 {
+  position: absolute;
+  border: 9px solid orange;
+  border-radius: 50%;
+  border-color: orange transparent transparent transparent;
+  width: 60px;
+  height: 60px;
+  animation: spinning 1s infinite;
+  animation-delay: -0.3s;
+}
+
+.loadingdiv3 {
+  position: absolute;
+  border: 9px solid orange;
+  border-radius: 50%;
+  border-color: orange transparent transparent transparent;
+  width: 60px;
+  height: 60px;
+  animation: spinning 1s infinite;
+  animation-delay: -0.2s;
+}
+
+.loadingdiv4 {
+  position: absolute;
+  border: 9px solid orange;
+  border-radius: 50%;
+  border-color: orange transparent transparent transparent;
+  width: 60px;
+  height: 60px;
+  animation: spinning 1s infinite;
+  animation-delay: -0.1s;
+}
+
+@keyframes spinning {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

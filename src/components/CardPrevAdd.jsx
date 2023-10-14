@@ -1,21 +1,43 @@
 import styled from 'styled-components'
+import { Link, useLocation } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
 
 const CardPrevAdd = () => {
+  const location = useLocation()
+  const cardId = uuidv4()
   return (
-    <Container $color={'gray'}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          padding: '0 15px',
-          boxSizing: 'border-box',
-        }}
-      >
-        카드 추가하기
-      </div>
-    </Container>
+    <Link
+      to={`/card/${cardId}`}
+      state={{
+        background: location,
+        CardAdd: true,
+        card: {
+          cardId: cardId,
+          name: '',
+          category: '보험',
+          date: '',
+          company: '',
+          pdfLink: 'https://naver.com',
+          summary: ``,
+          cardColor: '#DF6962',
+        },
+      }}
+    >
+      <Container $color={'gray'}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            padding: '0 15px',
+            boxSizing: 'border-box',
+          }}
+        >
+          카드 추가하기
+        </div>
+      </Container>
+    </Link>
   )
 }
 

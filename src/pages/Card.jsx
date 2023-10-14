@@ -1,11 +1,23 @@
-import Modal from './Modal'
+import Modal from '../components/Modal.jsx'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import '../style/Card.css'
 
 const Card = ({ userCards, setUserCards }) => {
   const [CardModifying, setCardModifying] = useState(false)
-  const card = useLocation().state.card
+  const [CardAdding, setCardAdding] = useState(false)
+  const state = useLocation().state
+
+  useEffect(() => {
+    if (state.CardAdd) {
+      setCardAdding(true)
+      setCardModifying(true)
+      setCompanyName('교보생명')
+    }
+  }, [])
+
+  const card = state.card
+
   useEffect(() => {
     if (CardModifying) {
       setCardName('')
@@ -54,13 +66,23 @@ const Card = ({ userCards, setUserCards }) => {
 
   const textareaRef = useRef(null)
 
-  const DEFAULT_HEIGHT = 0 // 이 값을 필요에 맞게 조절하세요
+  const getCurrentDate = () => {
+    const today = new Date()
+    const { getFullYear, getMonth, getDate } = today
+
+    const year = getFullYear.call(today)
+    const month = (getMonth.call(today) + 1).toString().padStart(2, '0')
+    const day = getDate.call(today).toString().padStart(2, '0')
+
+    return `${year}-${month}-${day}`
+  }
+
   const handleTextChange = (e) => {
     const value = e.target.value
     setCardSummary(value) // 내용 업데이트
     const textarea = textareaRef.current
     textarea.style.height = 0
-    textarea.style.height = DEFAULT_HEIGHT + textarea.scrollHeight + 'px'
+    textarea.style.height = 30 + textarea.scrollHeight + 'px'
   }
 
   // CardEdit 요약하기 함수
@@ -69,23 +91,43 @@ const Card = ({ userCards, setUserCards }) => {
     if (CompanyName !== '' && CardName !== '' && CardSummary !== '') {
       const cardIndex = userCards.findIndex((card) => card.cardId === cardId)
 
-      // 해당 인덱스의 객체를 복제하고, 원하는 속성들을 업데이트
-      const updatedCard = {
-        ...userCards[cardIndex],
-        name: CardName,
-        company: CompanyName,
-        summary: CardSummary,
+      // 카드 수정하기일때
+      if (!CardAdding) {
+        // 해당 인덱스의 객체를 복제하고, 원하는 속성들을 업데이트
+        const updatedCard = {
+          ...userCards[cardIndex],
+          name: CardName,
+          company: CompanyName,
+          summary: CardSummary,
+        }
+        // 전체 userCards 배열을 복제하고, 해당 인덱스의 객체를 업데이트된 객체로 변경
+        const updatedCards = [
+          ...userCards.slice(0, cardIndex),
+          updatedCard,
+          ...userCards.slice(cardIndex + 1),
+        ]
+        // 상태를 업데이트
+        setUserCards(updatedCards)
+        navigate('/home')
       }
+      // 카드 추가하기일때
+      else {
+        const updatedCard = {
+          cardId: cardId,
+          category: '보험',
+          date: getCurrentDate(),
+          pdfLink: 'https://naver.com',
+          cardColor: CardColorList[selectedColorIndex],
+          name: CardName,
+          company: CompanyName,
+          summary: CardSummary,
+        }
 
-      // 전체 userCards 배열을 복제하고, 해당 인덱스의 객체를 업데이트된 객체로 변경
-      const updatedCards = [
-        ...userCards.slice(0, cardIndex),
-        updatedCard,
-        ...userCards.slice(cardIndex + 1),
-      ]
-      // 상태를 업데이트
-      setUserCards(updatedCards)
-      navigate('/home')
+        const updatedCards = [...userCards, updatedCard]
+        // 상태를 업데이트
+        setUserCards(updatedCards)
+        navigate('/home')
+      }
     }
   }
 
@@ -116,7 +158,10 @@ const Card = ({ userCards, setUserCards }) => {
                   className="CompanySelectDiv"
                 >
                   {!CardModifying && <option value={CompanyName}>{CompanyName}</option>}
-                  {CardModifying && (
+                  {CardModifying && !CardAdding && (
+                    <option value={CompanyName}>{CompanyName}</option>
+                  )}
+                  {CardModifying && CardAdding && (
                     <>
                       <option value="교보생명" disabled={!CardModifying}>
                         교보생명
@@ -138,7 +183,7 @@ const Card = ({ userCards, setUserCards }) => {
                   value={CardName}
                   style={
                     CardModifying
-                      ? { backgroundColor: '#FFFFFF', color: 'white' }
+                      ? { backgroundColor: '#FFFFFF', color: 'black' }
                       : { backgroundColor: card.cardColor, color: 'white' }
                   }
                   onChange={(event) => {
@@ -211,9 +256,14 @@ const Card = ({ userCards, setUserCards }) => {
                 </button>
               </>
             )}
-            {CardModifying && (
+            {CardModifying && !CardAdding && (
               <button className="PdfSummary" onClick={SummaryPdf}>
                 PDF 요약하기
+              </button>
+            )}
+            {CardModifying && CardAdding && (
+              <button className="PdfSummary" onClick={SummaryPdf}>
+                카드 추가하기
               </button>
             )}
           </div>

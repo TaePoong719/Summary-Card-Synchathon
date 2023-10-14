@@ -6,10 +6,12 @@ import axios from 'axios'
 import '../style/CardHousing.css'
 import { v4 as uuidv4 } from 'uuid'
 
-const CardHousing = ({ userCards, setUserCards }) => {
+const CardHousing = ({ userCards, setUserCards, setLoading }) => {
   const navigate = useNavigate()
   const getHousing = async () => {
+    setLoading(true)
     const res = await axios.get('/api/904/get_subscription_detail')
+    setLoading(false)
     return res.data.result
   }
 
@@ -50,7 +52,7 @@ const CardHousing = ({ userCards, setUserCards }) => {
         firstOptionValue = '트리우스광명'
         break
       case '충주':
-        firstOptionValue = 'SH 항동 공공주택지구 2단지'
+        firstOptionValue = 'SH 항동 공공주택지구 2단지 공공분양'
         break
       default:
         firstOptionValue = ''
@@ -70,7 +72,7 @@ const CardHousing = ({ userCards, setUserCards }) => {
 
           return isAddressMatch && isNameMatch
         })
-        console.log(filtered)
+
         const cash = {
           cardId: uuidv4(),
           name: filtered[0].분양아파트명,
@@ -78,7 +80,26 @@ const CardHousing = ({ userCards, setUserCards }) => {
           date: getCurrentDate(),
           company: filtered[0].건설업체명,
           pdfLink: 'https://naver.com',
-          summary: `주소:${filtered[0].주소}\n지역:${filtered[0].지역}\n청약가능통장:${filtered[0].청약가능통장}\n총세대수:${filtered[0].총세대수}\n건설업체명:${filtered[0].건설업체명}\n최대공급면적평:${filtered[0].최대공급면적평}\n최소공급면적평:${filtered[0].최소공급면적평}\n최대전용면적평:${filtered[0].최대전용면적평}\n최소전용면적평:${filtered[0].최소전용면적평}\n분양정보특이시항내용:${filtered[0].분양정보특이시항내용}\n입주자모집공고:${filtered[0].분양일정.입주자모집공고}\n계약기간:${filtered[0].분양일정.계약기간}\n입주시기:${filtered[0].분양일정.입주시기}\n당첨자발표:${filtered[0].분양일정.당첨자발표}\n1순위 청약접수년월일:${filtered[0].분양일정.ARRAY수1[0].청약접수년월일}\n1순위 청약지역:${filtered[0].분양일정.ARRAY수1[0].청약지역}\n2순위 청약접수년월일:${filtered[0].분양일정.ARRAY수1[1].청약접수년월일}\n2순위 청약지역:${filtered[0].분양일정.ARRAY수1[1].청약지역}
+          summary: `주소:${filtered[0].주소}\n지역:${filtered[0].지역}\n청약가능통장:${
+            filtered[0].청약가능통장
+          }\n총세대수:${filtered[0].총세대수}\n건설업체명:${
+            filtered[0].건설업체명
+          }\n최대공급면적평:${filtered[0].최대공급면적평}\n최소공급면적평:${
+            filtered[0].최소공급면적평
+          }\n최대전용면적평:${filtered[0].최대전용면적평}\n최소전용면적평:${
+            filtered[0].최소전용면적평
+          }\n분양정보특이시항내용:${filtered[0].분양정보특이시항내용.replace(
+            /[-\\n]/g,
+            '|'
+          )}\n입주자모집공고:${filtered[0].분양일정.입주자모집공고}\n계약기간:${
+            filtered[0].분양일정.계약기간
+          }\n입주시기:${filtered[0].분양일정.입주시기}\n당첨자발표:${
+            filtered[0].분양일정.당첨자발표
+          }\n1순위 청약접수년월일:${
+            filtered[0].분양일정.ARRAY수1[0].청약접수년월일
+          }\n1순위 청약지역:${filtered[0].분양일정.ARRAY수1[0].청약지역}\n2순위 청약접수년월일:${
+            filtered[0].분양일정.ARRAY수1[1].청약접수년월일
+          }\n2순위 청약지역:${filtered[0].분양일정.ARRAY수1[1].청약지역}
 `,
           cardColor: `#${colors.join('')}`,
         }
@@ -146,7 +167,9 @@ const CardHousing = ({ userCards, setUserCards }) => {
             {region === '충주' && (
               <div className="NameSelectdiv">
                 <select onChange={(e) => setName(e.target.value)} className="NameSelect">
-                  <option value="SH 항동 공공주택지구 2단지">SH 항동 공공주택지구 2단지</option>
+                  <option value="SH 항동 공공주택지구 2단지 공공분양">
+                    SH 항동 공공주택지구 2단지 공공분양
+                  </option>
                 </select>
               </div>
             )}
