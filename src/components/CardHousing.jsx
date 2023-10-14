@@ -7,9 +7,21 @@ import '../style/CardHousing.css'
 import { v4 as uuidv4 } from 'uuid'
 
 const CardHousing = ({ userCards, setUserCards }) => {
+  const navigate = useNavigate()
   const getHousing = async () => {
     const res = await axios.get('/api/904/get_subscription_detail')
     return res.data.result
+  }
+
+  const getCurrentDate = () => {
+    const today = new Date()
+    const { getFullYear, getMonth, getDate } = today
+
+    const year = getFullYear.call(today)
+    const month = (getMonth.call(today) + 1).toString().padStart(2, '0')
+    const day = getDate.call(today).toString().padStart(2, '0')
+
+    return `${year}-${month}-${day}`
   }
 
   const [region, setRegion] = useState('서울')
@@ -27,10 +39,9 @@ const CardHousing = ({ userCards, setUserCards }) => {
 
   useEffect(() => {
     let firstOptionValue
-
     switch (region) {
       case '서울':
-        firstOptionValue = ''
+        firstOptionValue = '래미안 라그란데'
         break
       case '인천':
         firstOptionValue = '검단신도시롯데캐슬넥스티엘'
@@ -53,25 +64,28 @@ const CardHousing = ({ userCards, setUserCards }) => {
       if (region !== '' && name !== '') {
         const housingList = await getHousing()
         const filtered = housingList.filter((apartment) => {
-          apartment.금융결제원분양주소.includes(region) &&
-            apartment['분양 아파트명'].replace(/\s+/g, '') === name.replace(/\s+/g, '')
+          const isAddressMatch = apartment.주소.includes(region)
+          const isNameMatch =
+            apartment['분양아파트명'].replace(/\s+/g, '') === name.replace(/\s+/g, '')
+
+          return isAddressMatch && isNameMatch
         })
+        console.log(filtered)
         const cash = {
           cardId: uuidv4(),
-          name: r.분양아파트명,
+          name: filtered[0].분양아파트명,
           category: '청약',
-          date: `${r.계약시작일.substring(0, 4)}-${r.계약시작일.substring(
-            4,
-            6
-          )}-${r.계약시작일.substring(6, 8)}`,
-          company: r.회사이름,
+          date: getCurrentDate(),
+          company: filtered[0].건설업체명,
           pdfLink: 'https://naver.com',
-          summary: `${r.보장혜택명}\n${r.회사제공혜택명}\n${r.계약시작일}\n${r.계약종료일}`,
+          summary: `주소:${filtered[0].주소}\n지역:${filtered[0].지역}\n청약가능통장:${filtered[0].청약가능통장}\n총세대수:${filtered[0].총세대수}\n건설업체명:${filtered[0].건설업체명}\n최대공급면적평:${filtered[0].최대공급면적평}\n최소공급면적평:${filtered[0].최소공급면적평}\n최대전용면적평:${filtered[0].최대전용면적평}\n최소전용면적평:${filtered[0].최소전용면적평}\n분양정보특이시항내용:${filtered[0].분양정보특이시항내용}\n입주자모집공고:${filtered[0].분양일정.입주자모집공고}\n계약기간:${filtered[0].분양일정.계약기간}\n입주시기:${filtered[0].분양일정.입주시기}\n당첨자발표:${filtered[0].분양일정.당첨자발표}\n1순위 청약접수년월일:${filtered[0].분양일정.ARRAY수1[0].청약접수년월일}\n1순위 청약지역:${filtered[0].분양일정.ARRAY수1[0].청약지역}\n2순위 청약접수년월일:${filtered[0].분양일정.ARRAY수1[1].청약접수년월일}\n2순위 청약지역:${filtered[0].분양일정.ARRAY수1[1].청약지역}
+`,
           cardColor: `#${colors.join('')}`,
         }
 
-        const updatedUserCards = [...userCards, ...cash]
+        const updatedUserCards = [...userCards, cash]
         setUserCards(updatedUserCards)
+        navigate('/home')
       }
     } catch (e) {
       console.log(e)

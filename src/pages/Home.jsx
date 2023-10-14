@@ -17,6 +17,17 @@ const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
 
   const location = useLocation()
 
+  const getCurrentDate = () => {
+    const today = new Date()
+    const { getFullYear, getMonth, getDate } = today
+
+    const year = getFullYear.call(today)
+    const month = (getMonth.call(today) + 1).toString().padStart(2, '0')
+    const day = getDate.call(today).toString().padStart(2, '0')
+
+    return `${year}-${month}-${day}`
+  }
+
   const getInsurance = async () => {
     try {
       const res = await axios.get('/api/904/insurance_list')
@@ -26,10 +37,7 @@ const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
           cardId: uuidv4(),
           name: r.상품이름,
           category: '보험',
-          date: `${r.계약시작일.substring(0, 4)}-${r.계약시작일.substring(
-            4,
-            6
-          )}-${r.계약시작일.substring(6, 8)}`,
+          date: getCurrentDate(),
           company: r.회사이름,
           pdfLink: 'https://naver.com',
           summary: `${r.보장혜택명}\n${r.회사제공혜택명}\n${r.계약시작일}\n${r.계약종료일}`,

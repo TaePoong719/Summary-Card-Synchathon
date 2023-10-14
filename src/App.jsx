@@ -68,8 +68,14 @@ function App() {
               />
             }
           />
-          <Route path="card/:cardId" element={<Card setUserCards={setUserCards} />} />
-          <Route path="housing" element={<CardHousing setUserCards={setUserCards} />} />
+          <Route
+            path="card/:cardId"
+            element={<Card userCards={userCards} setUserCards={setUserCards} />}
+          />
+          <Route
+            path="housing"
+            element={<CardHousing userCards={userCards} setUserCards={setUserCards} />}
+          />
           <Route path="detail" element={<Detail />}></Route>
         </Route>
         <Route path="login" element={<Login />} />
@@ -82,7 +88,10 @@ function App() {
             path="card/:cardId"
             element={<Card userCards={userCards} setUserCards={setUserCards} />}
           ></Route>
-          <Route path="housing" element={<CardHousing setUserCards={setUserCards} />} />
+          <Route
+            path="housing"
+            element={<CardHousing userCards={userCards} setUserCards={setUserCards} />}
+          />
           <Route path="detail" element={<Detail />}></Route>
         </Routes>
       )}
