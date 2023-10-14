@@ -55,7 +55,7 @@ img {
   margin-bottom: 10px;
 }
 
-select {
+.CompanySelectDiv {
   font-size: 20px; /* 폰트 크기 설정 */
   font-weight: bold;
   padding: 10px;
@@ -200,6 +200,7 @@ select::-ms-expand {
   border: none;
   border-radius: 10px;
   margin-right: 10px; /* Adding some space between the buttons */
+  cursor: pointer;
 }
 
 .PdfDetail {
@@ -214,6 +215,7 @@ select::-ms-expand {
   border: none;
   border-radius: 10px;
   margin-right: 10px; /* Adding some space between the buttons */
+  cursor: pointer;
 }
 
 .LinkToCardEdit {
@@ -228,4 +230,5 @@ select::-ms-expand {
   border: none;
   border-radius: 10px;
   margin-left: 10px; /* Adding some space between the buttons */
+  cursor: pointer;
 }

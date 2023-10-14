@@ -6,30 +6,31 @@ import Search from '../components/Search'
 import { useEffect, useState } from 'react'
 import CardPrevAdd from '../components/CardPrevAdd'
 import { TabletMin } from '../utils/responsive'
+import { Link, useLocation } from 'react-router-dom'
+import CardInsurance from '../components/CardInsurnace.jsx'
 
-const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
+const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards, setLoading }) => {
   useEffect(() => {
     setSearchedCards(userCards)
   }, [userCards])
+
+  const location = useLocation()
 
   return (
     <Container>
       <HeadlineContainer>
         <ButtonsContainer>
           <StyledButton
-            onClickHandler={() => {
-              console.log('내 보험 불러오기')
-            }}
+            onClickHandler={() => CardInsurance({ userCards, setUserCards, setLoading })}
           >
-            <p>내 보험 {<br />} 불러오기</p>
+            <p>내 보험 불러오기</p>
           </StyledButton>
-          <StyledButton
-            onClickHandler={() => {
-              console.log('청약정보 불러오기')
-            }}
-          >
-            <p>청약정보 {<br />} 불러오기</p>
-          </StyledButton>
+
+          <Link to={'/housing'} state={{ background: location }}>
+            <StyledButton>
+              <p>청약정보 {<br />} 불러오기</p>
+            </StyledButton>
+          </Link>
         </ButtonsContainer>
         <Search
           userCards={userCards}
