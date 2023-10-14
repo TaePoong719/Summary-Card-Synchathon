@@ -1,18 +1,18 @@
 [[redirects]]
-from = "*/api/850/*"
+from = "/api/850/*"
   to = "https://8508958360.for-seoul.synctreengine.com/:splat"  
   status = 200
   force = true
 
 [[redirects]]
-from = "*/api/246/*"
+from = "/api/246/*"
   to = "https://2468280591.for-seoul.synctreengine.com/:splat"  
   status = 200
   force = true
 
 
 [[redirects]]
-from = "*/api/904/*"
+from = "/api/904/*"
   to = "https://9042753645.for-seoul.synctreengine.com/:splat"  
   status = 200
   force = true
