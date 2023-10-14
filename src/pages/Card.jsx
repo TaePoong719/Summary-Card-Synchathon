@@ -286,7 +286,6 @@ const Card = ({ userCards, setUserCards }) => {
           <div></div>
         </div>
       </Modal>
-      <div style={{ height: '300px' }}></div>
     </div>
   )
 }

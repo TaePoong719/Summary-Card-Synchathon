@@ -4,7 +4,10 @@ import '../style/Modal.css'
 const Modal = ({ children, housing }) => {
   return (
     <div className="modalDiv">
-      <div className={housing ? 'modalHousing' : 'modal'}>{children}</div>
+      <div className="modal__inner">
+        <div style={{ height: '500px', width: '500px' }}>-</div>
+        <div className={housing ? 'modalHousing' : 'modal'}>{children}</div>
+      </div>
     </div>
   )
 }
