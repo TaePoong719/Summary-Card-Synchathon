@@ -35,7 +35,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('/api/904/insurance_list')
+        const res = await axios.get('/api/904/insurance_list', {
+          headers: { 'Content-Type': 'application/json' },
+        })
         console.log(res)
       } catch (e) {
         console.log(e)
