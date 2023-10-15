@@ -1,12 +1,13 @@
-import Modal from './Modal'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import '../style/Card.css'
 import axios from 'axios'
 import '../style/CardHousing.css'
 import { v4 as uuidv4 } from 'uuid'
+import ModalHousing from './ModalHousing.jsx'
+import useOnClickOutside from '../hooks/useOnClickOutside.js'
 
-const CardHousing = ({ userCards, setUserCards, setLoading }) => {
+const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) => {
   const navigate = useNavigate()
   const getHousing = async () => {
     setLoading(true)
@@ -14,6 +15,17 @@ const CardHousing = ({ userCards, setUserCards, setLoading }) => {
     setLoading(false)
     return res.data.result
   }
+
+  // 모달 열고 닫는 함수
+  const modalRef = useRef(null)
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+    navigate('/home')
+  }
+
+  // 모달 바깥을 클릭했을 때 모달을 닫도록 설정
+  useOnClickOutside(modalRef, closeModal)
 
   const getCurrentDate = () => {
     const today = new Date()
@@ -115,7 +127,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading }) => {
 
   return (
     <div>
-      <Modal housing={true}>
+      <ModalHousing setIsModalOpen={setIsModalOpen} ref={modalRef}>
         <div
           className="ModalContainer"
           style={{
@@ -126,6 +138,10 @@ const CardHousing = ({ userCards, setUserCards, setLoading }) => {
             minHeight: '500px',
             borderRadius: '20px',
             position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around', // 오타 수정
+            alignItems: 'center', // 오타 수정
             zIndex: 101,
           }}
         >
@@ -180,7 +196,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading }) => {
             </button>
           </div>
         </div>
-      </Modal>
+      </ModalHousing>
     </div>
   )
 }

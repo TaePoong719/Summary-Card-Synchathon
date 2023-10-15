@@ -20,7 +20,11 @@ function App() {
   // 모달 배경
   const location = useLocation()
   const background = location.state && location.state.background
+  // 모달 창 열렸나 닫혔나
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  // 로딩바 위한 전역상태
   const [loading, setLoading] = useState(false)
+
   const user = useContext(AuthContext)
 
   // 서버에서 유저 카드 정보 가져오기 데모 코드 : 실제론 fetch 말고 axios 사용하는게 좋을 듯
@@ -89,12 +93,19 @@ function App() {
                   searchedCards={searchedCards}
                   setSearchedCards={setSearchedCards}
                   setLoading={setLoading}
+                  isModalOpen={isModalOpen}
                 />
               }
             />
             <Route
               path="card/:cardId"
-              element={<Card userCards={userCards} setUserCards={setUserCards} />}
+              element={
+                <Card
+                  userCards={userCards}
+                  setUserCards={setUserCards}
+                  setIsModalOpen={setIsModalOpen}
+                />
+              }
             />
             <Route
               path="housing"
@@ -103,6 +114,7 @@ function App() {
                   userCards={userCards}
                   setUserCards={setUserCards}
                   setLoading={setLoading}
+                  setIsModalOpen={setIsModalOpen}
                 />
               }
             />
@@ -122,12 +134,19 @@ function App() {
                   searchedCards={searchedCards}
                   setSearchedCards={setSearchedCards}
                   setLoading={setLoading}
+                  isModalOpen={isModalOpen}
                 />
               }
             />
             <Route
               path="card/:cardId"
-              element={<Card userCards={userCards} setUserCards={setUserCards} />}
+              element={
+                <Card
+                  userCards={userCards}
+                  setUserCards={setUserCards}
+                  setIsModalOpen={setIsModalOpen}
+                />
+              }
             ></Route>
             <Route
               path="housing"
@@ -136,6 +155,7 @@ function App() {
                   userCards={userCards}
                   setUserCards={setUserCards}
                   setLoading={setLoading}
+                  setIsModalOpen={setIsModalOpen}
                 />
               }
             />

@@ -4,34 +4,34 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import useOnClickOutside from '../hooks/useOnClickOutside'
 import '../style/Card.css'
 
-const Card = ({ userCards, setUserCards }) => {
+const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
   // 카드 추가, 수정인지 아닌지 관리하는 상태
   const [CardModifying, setCardModifying] = useState(false)
   const [CardAdding, setCardAdding] = useState(false)
 
-  // uselocation으로 변수값들 보낸거 받는 변수
-  const state = useLocation().state
-
-  // 모달 열고 닫는 함수
-  const modalRef = useRef()
-  const navigate = useNavigate()
-
-  // 모달 닫기 함수
-  const closeModal = () => {
-    console.log('event')
-    navigate('/home')
-  }
-
-  // 모달 바깥을 클릭했을 때 모달을 닫도록 설정
-  useOnClickOutside(modalRef, closeModal)
-
   useEffect(() => {
+    // 카드 추가화면일때 상태 변경
     if (state.CardAdd) {
       setCardAdding(true)
       setCardModifying(true)
       setCompanyName('교보생명')
     }
   }, [])
+
+  // uselocation으로 변수값들 보낸거 받는 변수
+  const state = useLocation().state
+
+  // 모달 열고 닫는 함수
+  const modalRef = useRef(null)
+  const navigate = useNavigate()
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+    navigate('/home')
+  }
+
+  // 모달 바깥을 클릭했을 때 모달을 닫도록 설정
+  useOnClickOutside(modalRef, closeModal)
 
   const card = state.card
 
@@ -63,12 +63,13 @@ const Card = ({ userCards, setUserCards }) => {
     '#D9D9D9',
   ]
 
+  const isMobile = window.innerWidth <= 768 // 화면 크기를 기준으로 모바일 여부를 확인합니다.
   const modalBackgroundStyle = {
-    width: '100%',
+    width: isMobile ? '80%' : '700px', // 모바일 화면일 때는 80%로, PC 화면일 때는 500px로 설정합니다.
     height: 'auto',
     maxWidth: '500px',
     minHeight: '500px',
-    overflow: 'visible' /* 스크롤이 필요할 때만 표시 */,
+    overflow: 'visible', // 스크롤이 필요할 때만 표시
     margin: '0',
     position: 'absolute',
     top: '0',
@@ -149,7 +150,7 @@ const Card = ({ userCards, setUserCards }) => {
 
   return (
     <div className="ModalContainer">
-      <Modal housing={false} ref={modalRef}>
+      <Modal setIsModalOpen={setIsModalOpen} ref={modalRef}>
         {/*modal border-radius를 위한 배경. */}
         <div style={modalBackgroundStyle}></div>
         <div className="CardDetailDiv">
