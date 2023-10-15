@@ -34,8 +34,9 @@ const CompanyImage = ({ src }) => {
 const CompanyPhoto = styled.div`
   width: 100%;
   height: 100%;
-  background: url(${(props) => props.$src});
+  background: url(${(props) => props.$src}) no-repeat;
   background-position: center;
+  background-size: contain;
 `
 
 const CompanyWrap = styled.div`

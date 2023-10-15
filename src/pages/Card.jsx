@@ -156,11 +156,10 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
         <div className="CardDetailDiv">
           <div className="UpperBox">
             <div className="InnerBox">
-              <div className="ImgBox">
-                <img
+              <div>
+                <CompanyImage
                   src={`${import.meta.env.BASE_URL}company/${CompanyName}.svg`}
-                  alt={`${CompanyName}로고`}
-                  style={{ backgroundColor: 'white' }}
+                  className="ImgBox"
                 />
               </div>
               <div className="CompanySelect">
@@ -214,7 +213,6 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
           {!CardModifying && (
             <div className="CardSummary">
               <span>
-                {' '}
                 {card.summary
                   .trim()
                   .split('\n')
@@ -290,5 +288,21 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
     </div>
   )
 }
+
+const CompanyImage = ({ src }) => {
+  return (
+    <CompanyWrap>
+      <CompanyPhoto $src={src} />
+    </CompanyWrap>
+  )
+}
+
+const CompanyPhoto = styled.div`
+  width: 100%;
+  height: 100%;
+  background: url(${(props) => props.$src}) no-repeat;
+  background-position: center;
+  background-size: contain;
+`
 
 export default Card
