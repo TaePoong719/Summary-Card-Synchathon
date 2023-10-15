@@ -280,7 +280,6 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
               </button>
             )}
           </div>
-          <div></div>
         </div>
       </Modal>
     </div>
