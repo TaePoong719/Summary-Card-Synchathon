@@ -54,13 +54,13 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
   const CardColorList = [
     '#DF6961',
     '#B290A9',
-    '#617797',
-    '#5289FF',
-    '#D9D9D9',
-    '#D9D9D9',
-    '#D9D9D9',
-    '#D9D9D9',
-    '#D9D9D9',
+    '#495A73',
+    '#3A71B0',
+    '#8C86C3',
+    '#CC938D',
+    '#BDACF0',
+    '#2F4666',
+    '#6CB07F',
     '#D9D9D9',
   ]
 

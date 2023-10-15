@@ -75,7 +75,7 @@ const Landing = () => {
                 name: '이륜차 상해보험',
                 date: '2023-10-05',
                 company: '교보생명',
-                cardColor: '#DF6962',
+                cardColor: '#DF6961',
               }}
             />
           </div>
@@ -85,7 +85,7 @@ const Landing = () => {
                 name: '치아 보험',
                 date: '2023-10-13',
                 company: '교보생명',
-                cardColor: '#617797',
+                cardColor: '#B290A9',
               }}
             />
           </div>
@@ -95,7 +95,7 @@ const Landing = () => {
                 name: '암 보험',
                 date: '2023-10-23',
                 company: '교보생명',
-                cardColor: '#B290AA',
+                cardColor: '#3A71B0',
               }}
             />
           </div>
