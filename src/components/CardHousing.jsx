@@ -10,10 +10,15 @@ import useOnClickOutside from '../hooks/useOnClickOutside.js'
 const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) => {
   const navigate = useNavigate()
   const getHousing = async () => {
-    setLoading(true)
-    const res = await axios.get('/api/904/get_subscription_detail')
-    setLoading(false)
-    return res.data.result
+    try {
+      setLoading(true)
+      const res = await axios.get('/api/904/get_subscription_detail')
+      return res.data.result
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   // 모달 열고 닫는 함수

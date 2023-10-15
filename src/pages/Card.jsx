@@ -256,9 +256,9 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
           <div className="Buttons">
             {!CardModifying && (
               <>
-                <Link to={`/pdfdetail/${card.cardId}`}>
+                <a to={`https://naver.com`} target="_blank">
                   <button className="PdfDetail">자세히 보기</button>
-                </Link>
+                </a>
                 <button
                   className="LinkToCardEdit"
                   onClick={() => {

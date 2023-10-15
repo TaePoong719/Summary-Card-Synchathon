@@ -8,6 +8,7 @@ import CardPrevAdd from '../components/CardPrevAdd'
 import { TabletMin } from '../utils/responsive'
 import { Link, useLocation } from 'react-router-dom'
 import CardInsurance from '../components/CardInsurnace.jsx'
+import { v4 as uuidv4 } from 'uuid'
 
 const Home = ({
   userCards,
@@ -18,6 +19,7 @@ const Home = ({
   isModalOpen,
 }) => {
   const location = useLocation()
+  const cardId = uuidv4()
 
   useEffect(() => {
     setSearchedCards(userCards)
@@ -48,15 +50,34 @@ const Home = ({
         {searchedCards.map((card) => {
           return (
             <Link
+              key={`link${card.cardId}`}
               to={`/card/${card.cardId}`}
               className="custom-link "
               state={{ background: location, CardAdd: false, card: card }}
             >
-              <CardPrev card={card} key={card.cardId} />
+              <CardPrev card={card} key={`prev${card.cardId}`} />
             </Link>
           )
         })}
-        <CardPrevAdd />
+        <Link
+          to={`/card/${cardId}`}
+          state={{
+            background: location,
+            CardAdd: true,
+            card: {
+              cardId: cardId,
+              name: '',
+              category: '보험',
+              date: '',
+              company: '',
+              pdfLink: 'https://naver.com',
+              summary: ``,
+              cardColor: '#DF6962',
+            },
+          }}
+        >
+          <CardPrevAdd />
+        </Link>
       </CardContainer>
     </Container>
   )
@@ -89,7 +110,6 @@ const CardContainer = styled.section`
   display: flex;
   flex-flow: wrap;
   gap: 40px;
-
   ${(props) =>
     props.isModalOpen
       ? css`

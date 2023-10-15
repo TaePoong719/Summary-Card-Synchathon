@@ -15,7 +15,6 @@ const Landing = () => {
 
   const handleAuth = async () => {
     try {
-      console.log(user)
       if (user !== undefined) {
         localStorage.setItem('userData', JSON.stringify(user))
       } else {
