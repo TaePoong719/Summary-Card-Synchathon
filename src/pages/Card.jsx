@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import useOnClickOutside from '../hooks/useOnClickOutside'
 import '../style/Card.css'
+import styled from 'styled-components'
 
 const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
   // 카드 추가, 수정인지 아닌지 관리하는 상태
@@ -53,13 +54,13 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
   const CardColorList = [
     '#DF6961',
     '#B290A9',
-    '#617797',
-    '#5289FF',
-    '#D9D9D9',
-    '#D9D9D9',
-    '#D9D9D9',
-    '#D9D9D9',
-    '#D9D9D9',
+    '#495A73',
+    '#3A71B0',
+    '#8C86C3',
+    '#CC938D',
+    '#BDACF0',
+    '#2F4666',
+    '#6CB07F',
     '#D9D9D9',
   ]
 
@@ -157,11 +158,7 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
           <div className="UpperBox">
             <div className="InnerBox">
               <div className="ImgBox">
-                <img
-                  src={`${import.meta.env.BASE_URL}company/${CompanyName}.svg`}
-                  alt={`${CompanyName}로고`}
-                  style={{ backgroundColor: 'white' }}
-                />
+                <CompanyImage company={CompanyName} />
               </div>
               <div className="CompanySelect">
                 <select
@@ -214,7 +211,6 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
           {!CardModifying && (
             <div className="CardSummary">
               <span>
-                {' '}
                 {card.summary
                   .trim()
                   .split('\n')
@@ -289,5 +285,35 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
     </div>
   )
 }
+const companies = ['교보생명', '롯데건설', '삼성물산', '삼성생명', '서울주택도시공사', '중앙건설']
+
+const CompanyImage = ({ company }) => {
+  let src = ''
+  if (companies.find((com) => com === company)) {
+    src = `${import.meta.env.BASE_URL}company/${company}.svg`
+  } else {
+    src = `${import.meta.env.BASE_URL}logo_40.svg`
+  }
+  return (
+    <CompanyWrap>
+      <CompanyPhoto $src={src} />
+    </CompanyWrap>
+  )
+}
+
+const CompanyWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: white;
+`
+
+const CompanyPhoto = styled.div`
+  width: 100%;
+  height: 100%;
+  background: url(${(props) => props.$src}) no-repeat;
+  background-position: center;
+  background-size: contain;
+`
 
 export default Card

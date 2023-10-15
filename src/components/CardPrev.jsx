@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import '../style/CardPrev.css'
 
 const CardPrev = ({ card }) => {
@@ -14,7 +14,7 @@ const CardPrev = ({ card }) => {
           boxSizing: 'border-box',
         }}
       >
-        <CompanyImage src={`${import.meta.env.BASE_URL}company/${card.company}.svg`}></CompanyImage>
+        <CompanyImage company={card.company}></CompanyImage>
         <h3>{card.company}</h3>
       </div>
       <h1>{card.name}</h1>
@@ -22,8 +22,16 @@ const CardPrev = ({ card }) => {
     </Container>
   )
 }
+const companies = ['교보생명', '롯데건설', '삼성물산', '삼성생명', '서울주택도시공사', '중앙건설']
 
-const CompanyImage = ({ src }) => {
+const CompanyImage = ({ company }) => {
+  let src = ''
+  if (companies.find((com) => com === company)) {
+    src = `${import.meta.env.BASE_URL}company/${company}.svg`
+  } else {
+    src = `${import.meta.env.BASE_URL}logo_40.svg`
+  }
+
   return (
     <CompanyWrap>
       <CompanyPhoto $src={src} />
@@ -34,8 +42,9 @@ const CompanyImage = ({ src }) => {
 const CompanyPhoto = styled.div`
   width: 100%;
   height: 100%;
-  background: url(${(props) => props.$src});
+  background: url(${(props) => props.$src}) no-repeat;
   background-position: center;
+  background-size: contain;
 `
 
 const CompanyWrap = styled.div`
@@ -57,6 +66,27 @@ const Container = styled.div`
   background: ${(props) => props.$color};
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.4);
   color: white;
+  text-align: center;
+  line-height: 1.5;
+  h1 {
+    display: -webkit-box;
+    width: 100%;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+    overflow: hidden;
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  h3 {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  h4 {
+    font-size: 1.1rem;
+  }
 `
 
 export default CardPrev

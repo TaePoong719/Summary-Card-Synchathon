@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
-import Landing from './pages/Landing'
-import Home from './pages/Home'
+import Landing from './pages/Landing.jsx'
+import Home from './pages/Home.jsx'
 import Card from './pages/Card.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/Signup.jsx'
@@ -24,19 +24,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   // 로딩바 위한 전역상태
   const [loading, setLoading] = useState(false)
-
   const user = useContext(AuthContext)
-
-  // 서버에서 유저 카드 정보 가져오기 데모 코드 : 실제론 fetch 말고 axios 사용하는게 좋을 듯
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (user) {
-  //       const res = await fetch('https://naver.com')
-  //       setUserCards(res.body)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [user])
 
   useEffect(() => {
     const fetchData = async () => {

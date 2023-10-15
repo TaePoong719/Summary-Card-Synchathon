@@ -17,11 +17,11 @@ const Home = ({
   setLoading,
   isModalOpen,
 }) => {
+  const location = useLocation()
+
   useEffect(() => {
     setSearchedCards(userCards)
   }, [userCards])
-
-  const location = useLocation()
 
   return (
     <Container>
