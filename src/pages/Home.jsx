@@ -46,7 +46,15 @@ const Home = ({
       </HeadlineContainer>
       <CardContainer isModalOpen={isModalOpen}>
         {searchedCards.map((card) => {
-          return <CardPrev card={card} key={card.cardId} />
+          return (
+            <Link
+              to={`/card/${card.cardId}`}
+              className="custom-link "
+              state={{ background: location, CardAdd: false, card: card }}
+            >
+              <CardPrev card={card} key={card.cardId} />
+            </Link>
+          )
         })}
         <CardPrevAdd />
       </CardContainer>
