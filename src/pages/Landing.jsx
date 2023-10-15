@@ -362,13 +362,15 @@ const Section4 = styled(Section)`
 
   .landing4__dot-list {
     text-align: left;
-    list-style-type: disc; /* 원 모양의 점을 표시합니다. */
+    list-style: disc; /* 원 모양의 점을 표시합니다. */
     padding-left: 20px; /* 점과 텍스트 사이의 간격을 조절할 수 있습니다. */
   }
 
   .landing4__dot-list li {
+    list-style: disc; /* 원 모양의 점을 표시합니다. */
     color: white;
     margin-bottom: 10px; /* 각 목록 항목 간의 아래 여백을 늘립니다. */
+    font-weight: bold;
   }
 `
 
