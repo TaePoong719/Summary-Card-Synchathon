@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import '../style/CardPrev.css'
 
 const CardPrev = ({ card }) => {
@@ -68,6 +68,25 @@ const Container = styled.div`
   color: white;
   text-align: center;
   line-height: 1.5;
+  h1 {
+    display: -webkit-box;
+    width: 100%;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+    overflow: hidden;
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  h3 {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  h4 {
+    font-size: 1.1rem;
+  }
 `
 
 export default CardPrev

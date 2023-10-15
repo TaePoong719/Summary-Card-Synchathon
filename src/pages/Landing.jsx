@@ -155,6 +155,7 @@ const Section3 = styled(Section)`
     position: absolute;
     bottom: 150px;
     right: 40px;
+    font-size: 1.25rem;
     font-weight: bold;
   }
 `

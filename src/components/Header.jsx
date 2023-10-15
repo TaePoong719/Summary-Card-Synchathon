@@ -11,18 +11,18 @@ const Header = () => {
   const { pathname } = useLocation()
   const [userData, setUserData] = useState({})
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user !== undefined) {
-        if (pathname === '/') {
-          navigate('/home')
-        }
-        setUserData(user)
-      } else {
-        navigate('/')
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user !== undefined) {
+  //       if (pathname === '/') {
+  //         navigate('/home')
+  //       }
+  //       setUserData(user)
+  //     } else {
+  //       navigate('/')
+  //     }
+  //   })
+  // }, [])
 
   return (
     <Container>
