@@ -14,7 +14,7 @@ const CardPrev = ({ card }) => {
           boxSizing: 'border-box',
         }}
       >
-        <CompanyImage src={`${import.meta.env.BASE_URL}company/${card.company}.svg`}></CompanyImage>
+        <CompanyImage company={card.company}></CompanyImage>
         <h3>{card.company}</h3>
       </div>
       <h1>{card.name}</h1>
@@ -22,8 +22,16 @@ const CardPrev = ({ card }) => {
     </Container>
   )
 }
+const companies = ['교보생명', '롯데건설', '삼성물산', '삼성생명', '서울주택도시공사', '중앙건설']
 
-const CompanyImage = ({ src }) => {
+const CompanyImage = ({ company }) => {
+  let src = ''
+  if (companies.find((com) => com === company)) {
+    src = `${import.meta.env.BASE_URL}company/${company}.svg`
+  } else {
+    src = `${import.meta.env.BASE_URL}logo_40.svg`
+  }
+
   return (
     <CompanyWrap>
       <CompanyPhoto $src={src} />
@@ -58,6 +66,8 @@ const Container = styled.div`
   background: ${(props) => props.$color};
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.4);
   color: white;
+  text-align: center;
+  line-height: 1.5;
 `
 
 export default CardPrev
