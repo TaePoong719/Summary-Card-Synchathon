@@ -16,7 +16,6 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading }) => {
   try {
     setLoading(true)
     const res = await axios.get('/api/904/insurance_list')
-    setLoading(false)
     const cash = []
     for (const r of res.data.result) {
       cash.push({
@@ -53,6 +52,8 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading }) => {
     setUserCards(updatedUserCards)
   } catch (e) {
     console.log(e)
+  } finally {
+    setLoading(false)
   }
 }
 

@@ -11,9 +11,9 @@
 
 .loadingdiv1 {
   position: absolute;
-  border: 9px solid orange;
+  border: 9px solid var(--main-color);
   border-radius: 50%;
-  border-color: orange transparent transparent transparent;
+  border-color: var(--main-color) transparent transparent transparent;
   width: 60px;
   height: 60px;
   animation: spinning 1s infinite;
@@ -21,9 +21,9 @@
 
 .loadingdiv2 {
   position: absolute;
-  border: 9px solid orange;
+  border: 9px solid var(--main-color);
   border-radius: 50%;
-  border-color: orange transparent transparent transparent;
+  border-color: var(--main-color) transparent transparent transparent;
   width: 60px;
   height: 60px;
   animation: spinning 1s infinite;
@@ -32,9 +32,9 @@
 
 .loadingdiv3 {
   position: absolute;
-  border: 9px solid orange;
+  border: 9px solid var(--main-color);
   border-radius: 50%;
-  border-color: orange transparent transparent transparent;
+  border-color: var(--main-color) transparent transparent transparent;
   width: 60px;
   height: 60px;
   animation: spinning 1s infinite;
@@ -43,9 +43,9 @@
 
 .loadingdiv4 {
   position: absolute;
-  border: 9px solid orange;
+  border: 9px solid var(--main-color);
   border-radius: 50%;
-  border-color: orange transparent transparent transparent;
+  border-color: var(--main-color) transparent transparent transparent;
   width: 60px;
   height: 60px;
   animation: spinning 1s infinite;

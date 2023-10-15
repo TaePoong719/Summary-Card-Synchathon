@@ -50,11 +50,12 @@ const Home = ({
         {searchedCards.map((card) => {
           return (
             <Link
+              key={`link${card.cardId}`}
               to={`/card/${card.cardId}`}
               className="custom-link "
               state={{ background: location, CardAdd: false, card: card }}
             >
-              <CardPrev card={card} key={card.cardId} />
+              <CardPrev card={card} key={`prev${card.cardId}`} />
             </Link>
           )
         })}
@@ -109,7 +110,6 @@ const CardContainer = styled.section`
   display: flex;
   flex-flow: wrap;
   gap: 40px;
-
   ${(props) =>
     props.isModalOpen
       ? css`
