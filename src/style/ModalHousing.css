@@ -17,17 +17,6 @@
 }
 
 .modalHousing {
-  top: 3%;
-  width: 100%;
-  max-width: 500px;
-  min-height: 700px;
-  border-radius: 20px;
-  position: relative;
-  z-index: 100;
-  overflow: visible;
-}
-
-.modalHousing {
   background-color: white;
   top: 3%;
   width: 100%;
@@ -40,10 +29,18 @@
 }
 
 @media (max-width: 768px) {
-  .modal {
-    overflow: visible; /* 유지 */
-    width: 100%;
-    height: 100%;
-    top: 10%;
+  /* Styles for screens with a maximum width of 768px (e.g., mobile devices) */
+  .modalHousing {
+    /* Modify styles for modal content */
+    background-color: white;
+    top: 5%;
+    width: 80%;
+    height: auto;
+    max-width: 700px; /* Adjust to take up the full width of the screen */
+    min-height: 400px; /* Take up the full viewport height */
+    border-radius: 20px;
+    position: relative;
+    z-index: 100;
+    overflow: auto;
   }
 }

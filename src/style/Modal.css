@@ -17,8 +17,10 @@
   overflow: auto;
   z-index: 100;
 }
+
 .modal__inner {
 }
+
 .modal {
   top: 5%;
   margin-bottom: 5%;
@@ -46,12 +48,41 @@
 }
 
 @media (max-width: 768px) {
+  /* Styles for screens with a maximum width of 768px (e.g., mobile devices) */
+
+  .modalDiv {
+    /* Modify styles for the modal container */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(153, 153, 153, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    overflow: auto;
+    z-index: 100;
+  }
+
+  .modal__inner {
+  }
+
   .modal {
-    overflow: auto; /* 유지 */
-    border-radius: 20px;
-    width: 100%;
+    /* Modify styles for the modal */
+    top: 5%;
+    margin-bottom: 5%;
+    left: 17%;
     height: auto;
-    top: 3%;
-    bottom: 10%;
+    width: 80%;
+    max-width: 700px; /* Adjust to take up the full width of the screen */
+    min-height: 500px; /* Take up the full viewport height */
+    border-radius: 0; /* Remove border-radius for full-width modals */
+    position: relative;
+    z-index: 100;
+    overflow: visible;
   }
 }

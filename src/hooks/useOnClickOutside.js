@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 export default function useOnClickOutside(ref, handler) {
   useEffect(() => {
     const listener = (e) => {
-      console.log(ref)
       /* 클릭 시 모달 창 안이면 */
       if (!ref.current || ref.current.contains(e.target)) return
       // 모달 바깥을 클릭했으므로 handler 함수 호출

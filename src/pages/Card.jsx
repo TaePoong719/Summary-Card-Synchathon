@@ -62,12 +62,13 @@ const Card = ({ userCards, setUserCards }) => {
     '#D9D9D9',
   ]
 
+  const isMobile = window.innerWidth <= 768 // 화면 크기를 기준으로 모바일 여부를 확인합니다.
   const modalBackgroundStyle = {
-    width: '100%',
-    height: '100%',
+    width: isMobile ? '80%' : '700px', // 모바일 화면일 때는 80%로, PC 화면일 때는 500px로 설정합니다.
+    height: 'auto',
     maxWidth: '500px',
     minHeight: '500px',
-    overflow: 'visible' /* 스크롤이 필요할 때만 표시 */,
+    overflow: 'visible', // 스크롤이 필요할 때만 표시
     margin: '0',
     position: 'absolute',
     top: '0',
