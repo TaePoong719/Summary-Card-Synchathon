@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import CardPrev from '../components/CardPrev'
 import '../style/Home.css'
 import StyledButton from '../components/StyledButton'
@@ -9,7 +9,14 @@ import { TabletMin } from '../utils/responsive'
 import { Link, useLocation } from 'react-router-dom'
 import CardInsurance from '../components/CardInsurnace.jsx'
 
-const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards, setLoading }) => {
+const Home = ({
+  userCards,
+  setUserCards,
+  searchedCards,
+  setSearchedCards,
+  setLoading,
+  isModalOpen,
+}) => {
   useEffect(() => {
     setSearchedCards(userCards)
   }, [userCards])
@@ -25,7 +32,6 @@ const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards, setLoa
           >
             <p>내 보험 {<br />}불러오기</p>
           </StyledButton>
-
           <Link to={'/housing'} state={{ background: location }}>
             <StyledButton>
               <p>청약정보 {<br />} 불러오기</p>
@@ -38,7 +44,7 @@ const Home = ({ userCards, setUserCards, searchedCards, setSearchedCards, setLoa
           setSearchedCards={setSearchedCards}
         />
       </HeadlineContainer>
-      <CardContainer>
+      <CardContainer isModalOpen={isModalOpen}>
         {searchedCards.map((card) => {
           return <CardPrev card={card} key={card.cardId} />
         })}
@@ -75,6 +81,16 @@ const CardContainer = styled.section`
   display: flex;
   flex-flow: wrap;
   gap: 40px;
+
+  ${(props) =>
+    props.isModalOpen
+      ? css`
+          position: fixed;
+          /* 다른 필요한 스타일 */
+        `
+      : css`
+          position: relative;
+        `}
 `
 
 export default Home

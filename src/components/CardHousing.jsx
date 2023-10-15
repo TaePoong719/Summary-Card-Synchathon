@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import ModalHousing from './ModalHousing.jsx'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
 
-const CardHousing = ({ userCards, setUserCards, setLoading }) => {
+const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) => {
   const navigate = useNavigate()
   const getHousing = async () => {
     setLoading(true)
@@ -127,7 +127,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading }) => {
 
   return (
     <div>
-      <ModalHousing ref={modalRef}>
+      <ModalHousing setIsModalOpen={setIsModalOpen} ref={modalRef}>
         <div
           className="ModalContainer"
           style={{
