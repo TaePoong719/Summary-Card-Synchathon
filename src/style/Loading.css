@@ -1,12 +1,12 @@
 .loading {
-  position: relative;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   z-index: 300;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .loadingdiv1 {
