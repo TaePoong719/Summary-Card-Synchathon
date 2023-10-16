@@ -8,6 +8,9 @@ import AuthProvider from './provider/userProvider'
 import CardHousing from './components/CardHousing.jsx'
 import Loading from './components/Loading.jsx'
 import { AuthContext } from './provider/userContext'
+import axios from 'axios'
+import { auth } from '../firebase.js'
+import { onAuthStateChanged } from 'firebase/auth'
 
 function App() {
   /* userCards는 유저의 카드, searchedCards는 유저가 카테고리를 클릭하거나, 검색을 했을 경우 화면에 보여지는 카드  */
@@ -22,127 +25,113 @@ function App() {
   const [loading, setLoading] = useState(false)
   const user = useContext(AuthContext)
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await axios.get('/api/904/insurance_list', {
-  //         headers: { 'Content-Type': 'application/json' },
-  //       })
-  //       console.log('보험정보', res)
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-  //   fetchData()
-  // })
+  useEffect(() => {
+    const fetchData = async (uid) => {
+      const res = await axios.post('/api/246/getairtableuser', {
+        uid: uid,
+      })
+      return res
+    }
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const res = await axios.post('api/850/login_get_card', {
-  //         uid: 'receaGGFLSVcHUroH',
-  //       })
-  //       console.log('유저카드정보', res)
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-
-  //   fetchUserData()
-  // }, [user])
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const res = await fetchData(user.uid)
+        console.log('getairtableuser', res)
+      }
+    })
+  }, [])
 
   return (
     <div>
       {loading && <Loading />}
-      <AuthProvider>
-        <Routes location={background || location}>
-          <Route index element={<Landing />} />
+
+      <Routes location={background || location}>
+        <Route index element={<Landing />} />
+        <Route
+          path="/"
+          element={
+            <Layout
+              userCards={userCards}
+              setUserCards={setUserCards}
+              searchedCards={searchedCards}
+              setSearchedCards={setSearchedCards}
+            />
+          }
+        >
           <Route
-            path="/"
+            path="home"
             element={
-              <Layout
+              <Home
                 userCards={userCards}
                 setUserCards={setUserCards}
                 searchedCards={searchedCards}
                 setSearchedCards={setSearchedCards}
+                setLoading={setLoading}
+                isModalOpen={isModalOpen}
               />
             }
-          >
-            <Route
-              path="home"
-              element={
-                <Home
-                  userCards={userCards}
-                  setUserCards={setUserCards}
-                  searchedCards={searchedCards}
-                  setSearchedCards={setSearchedCards}
-                  setLoading={setLoading}
-                  isModalOpen={isModalOpen}
-                />
-              }
-            />
-            <Route
-              path="card/:cardId"
-              element={
-                <Card
-                  userCards={userCards}
-                  setUserCards={setUserCards}
-                  setIsModalOpen={setIsModalOpen}
-                />
-              }
-            />
-            <Route
-              path="housing"
-              element={
-                <CardHousing
-                  userCards={userCards}
-                  setUserCards={setUserCards}
-                  setLoading={setLoading}
-                  setIsModalOpen={setIsModalOpen}
-                />
-              }
-            />
-          </Route>
+          />
+          <Route
+            path="card/:cardId"
+            element={
+              <Card
+                userCards={userCards}
+                setUserCards={setUserCards}
+                setIsModalOpen={setIsModalOpen}
+              />
+            }
+          />
+          <Route
+            path="housing"
+            element={
+              <CardHousing
+                userCards={userCards}
+                setUserCards={setUserCards}
+                setLoading={setLoading}
+                setIsModalOpen={setIsModalOpen}
+              />
+            }
+          />
+        </Route>
+      </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path="home"
+            element={
+              <Home
+                userCards={userCards}
+                setUserCards={setUserCards}
+                searchedCards={searchedCards}
+                setSearchedCards={setSearchedCards}
+                setLoading={setLoading}
+                isModalOpen={isModalOpen}
+              />
+            }
+          />
+          <Route
+            path="card/:cardId"
+            element={
+              <Card
+                userCards={userCards}
+                setUserCards={setUserCards}
+                setIsModalOpen={setIsModalOpen}
+              />
+            }
+          ></Route>
+          <Route
+            path="housing"
+            element={
+              <CardHousing
+                userCards={userCards}
+                setUserCards={setUserCards}
+                setLoading={setLoading}
+                setIsModalOpen={setIsModalOpen}
+              />
+            }
+          />
         </Routes>
-        {background && (
-          <Routes>
-            <Route
-              path="home"
-              element={
-                <Home
-                  userCards={userCards}
-                  setUserCards={setUserCards}
-                  searchedCards={searchedCards}
-                  setSearchedCards={setSearchedCards}
-                  setLoading={setLoading}
-                  isModalOpen={isModalOpen}
-                />
-              }
-            />
-            <Route
-              path="card/:cardId"
-              element={
-                <Card
-                  userCards={userCards}
-                  setUserCards={setUserCards}
-                  setIsModalOpen={setIsModalOpen}
-                />
-              }
-            ></Route>
-            <Route
-              path="housing"
-              element={
-                <CardHousing
-                  userCards={userCards}
-                  setUserCards={setUserCards}
-                  setLoading={setLoading}
-                  setIsModalOpen={setIsModalOpen}
-                />
-              }
-            />
-          </Routes>
-        )}
-      </AuthProvider>
+      )}
     </div>
   )
 }
@@ -150,7 +139,7 @@ function App() {
 const testUserCard = [
   {
     cardId: 'abasascnk21ms',
-    name: '이륜차 상해보험',
+    cardName: '이륜차 상해보험',
     category: '보험',
     date: '2023-10-07',
     company: '교보생명',
@@ -169,7 +158,7 @@ const testUserCard = [
   },
   {
     cardId: 'ammskmksm1ms',
-    name: '손해 보험',
+    cardName: '손해 보험',
     category: '보험',
     date: '2023-10-05',
     company: '교보생명',
@@ -182,7 +171,7 @@ const testUserCard = [
   },
   {
     cardId: 'a719cmkaoksams',
-    name: '암 보험',
+    cardName: '암 보험',
     category: '보험',
     date: '2023-10-08',
     company: '교보생명',
@@ -201,7 +190,7 @@ const testUserCard = [
   },
   {
     cardId: 'a719cmksoks9ks',
-    name: '암 보험',
+    cardName: '암 보험',
     category: '보험',
     date: '2023-10-08',
     company: '교보생명',
@@ -220,7 +209,7 @@ const testUserCard = [
   },
   {
     cardId: 'abasdcnk21ms',
-    name: '이륜차 상해보험',
+    cardName: '이륜차 상해보험',
     category: '보험',
     date: '2023-10-07',
     company: '교보생명',
@@ -239,7 +228,7 @@ const testUserCard = [
   },
   {
     cardId: 'ammskme1ms',
-    name: '손해 보험',
+    cardName: '손해 보험',
     category: '보험',
     date: '2023-10-05',
     company: '교보생명',
@@ -252,7 +241,7 @@ const testUserCard = [
   },
   {
     cardId: 'a719cmkhfsams',
-    name: '암 보험',
+    cardName: '암 보험',
     category: '보험',
     date: '2023-10-08',
     company: '교보생명',
@@ -271,7 +260,7 @@ const testUserCard = [
   },
   {
     cardId: 'a7goks9ks',
-    name: '암 보험',
+    cardName: '암 보험',
     category: '보험',
     date: '2023-10-08',
     company: '교보생명',
@@ -290,7 +279,7 @@ const testUserCard = [
   },
   {
     cardId: 'abahnk21ms',
-    name: '이륜차 상해보험',
+    cardName: '이륜차 상해보험',
     category: '보험',
     date: '2023-10-07',
     company: '교보생명',
@@ -309,7 +298,7 @@ const testUserCard = [
   },
   {
     cardId: 'amimksm1ms',
-    name: '손해 보험',
+    cardName: '손해 보험',
     category: '보험',
     date: '2023-10-05',
     company: '교보생명',
@@ -321,8 +310,8 @@ const testUserCard = [
     cardColor: '#B290AA',
   },
   {
-    cardId: 'a719cmkhjams',
-    name: '암 보험',
+    cardId: '2',
+    cardName: '암 보험',
     category: '보험',
     date: '2023-10-08',
     company: '교보생명',
@@ -340,8 +329,8 @@ const testUserCard = [
     cardColor: '#617797',
   },
   {
-    cardId: 'a719cmkoks9ks',
-    name: '암 보험',
+    cardId: '1',
+    cardName: '암 보험',
     category: '보험',
     date: '2023-10-08',
     company: '교보생명',

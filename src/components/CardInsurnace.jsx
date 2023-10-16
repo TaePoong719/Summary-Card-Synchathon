@@ -20,7 +20,7 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading }) => {
     for (const r of res.data.result) {
       cash.push({
         cardId: uuidv4(),
-        name: r.상품이름,
+        cardName: r.상품이름,
         category: '보험',
         date: getCurrentDate(),
         company: r.회사이름,

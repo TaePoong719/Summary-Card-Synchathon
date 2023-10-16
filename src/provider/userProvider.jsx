@@ -7,6 +7,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const subscribe = auth.onAuthStateChanged((fbUser) => {
+      console.log('why not?')
       setUser(fbUser)
     })
     return subscribe

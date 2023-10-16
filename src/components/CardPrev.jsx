@@ -17,7 +17,7 @@ const CardPrev = ({ card }) => {
         <CompanyImage company={card.company}></CompanyImage>
         <h3>{card.company}</h3>
       </div>
-      <h1>{card.name}</h1>
+      <h1>{card.cardName}</h1>
       <h4>{card.date}</h4>
     </Container>
   )

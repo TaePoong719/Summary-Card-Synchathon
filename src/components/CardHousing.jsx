@@ -92,7 +92,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
 
         const cash = {
           cardId: uuidv4(),
-          name: filtered[0].분양아파트명,
+          cardName: filtered[0].분양아파트명,
           category: '청약',
           date: getCurrentDate(),
           company: filtered[0].건설업체명,

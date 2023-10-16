@@ -66,7 +66,7 @@ const Home = ({
             CardAdd: true,
             card: {
               cardId: cardId,
-              name: '',
+              cardName: '',
               category: '보험',
               date: '',
               company: '',

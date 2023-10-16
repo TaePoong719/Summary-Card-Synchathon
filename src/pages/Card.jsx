@@ -47,7 +47,7 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
   const cardId = useParams().cardId
 
   const [CompanyName, setCompanyName] = useState(card.company)
-  const [CardName, setCardName] = useState(card.name)
+  const [CardName, setCardName] = useState(card.cardName)
   const [CardSummary, setCardSummary] = useState('')
 
   const [selectedColorIndex, setSelectedColorIndex] = useState(9)
@@ -114,7 +114,7 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
         // 해당 인덱스의 객체를 복제하고, 원하는 속성들을 업데이트
         const updatedCard = {
           ...userCards[cardIndex],
-          name: CardName,
+          cardName: CardName,
           company: CompanyName,
           summary: CardSummary,
         }
@@ -136,7 +136,7 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
           date: getCurrentDate(),
           pdfLink: 'https://naver.com',
           cardColor: CardColorList[selectedColorIndex],
-          name: CardName,
+          cardName: CardName,
           company: CompanyName,
           summary: CardSummary,
         }

@@ -7,15 +7,17 @@ const Search = ({ userCards, setSearchedCards }) => {
   const val = useDebounce(searchVal, 500)
 
   useEffect(() => {
-    const reg = new RegExp(trimmingStr(val))
-    setSearchedCards(
-      userCards.filter(
-        (card) =>
-          reg.test(trimmingStr(card.name)) ||
-          reg.test(trimmingStr(card.company.trim())) ||
-          reg.test(trimmingStr(card.category.trim()))
+    if (userCards.length) {
+      const reg = new RegExp(trimmingStr(val))
+      setSearchedCards(
+        userCards.filter(
+          (card) =>
+            reg.test(trimmingStr(card.cardName)) ||
+            reg.test(trimmingStr(card.company.trim())) ||
+            reg.test(trimmingStr(card.category.trim()))
+        )
       )
-    )
+    }
   }, [val])
 
   const handleInputChange = useCallback((e) => {

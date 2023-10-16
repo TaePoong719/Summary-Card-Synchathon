@@ -7,20 +7,25 @@ import '../style/Landing.css'
 import googleIcon from '../../public/googleIcon.svg'
 import styled from 'styled-components'
 import CardPrev from '../components/CardPrev'
+import axios from 'axios'
+import { AuthContext } from '../provider/userContext'
 
 const Landing = () => {
   const provider = new GoogleAuthProvider()
   const navigate = useNavigate()
-  const user = useContext(AuthProvider)
 
   const handleAuth = async () => {
     try {
-      if (user !== undefined) {
-        localStorage.setItem('userData', JSON.stringify(user))
-      } else {
-        const res = await signInWithPopup(auth, provider)
-        /* userCredential을 받아서 uid를 db로 보내면, 이미 db에 있으면 무시, db에 없다면 유저 등록  */
-      }
+      const { user } = await signInWithPopup(auth, provider)
+      console.log('로그인된', user)
+
+      const res = await axios.post('/api/850/login_card_info', {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        phone: '010-0000-0000',
+      })
+      console.log('login_card', res)
       navigate('/home')
     } catch (e) {
       alert(e)
@@ -71,7 +76,7 @@ const Landing = () => {
           <div className="card_1">
             <CardPrev
               card={{
-                name: '이륜차 상해보험',
+                cardName: '이륜차 상해보험',
                 date: '2023-10-05',
                 company: '교보생명',
                 cardColor: '#DF6961',
@@ -81,7 +86,7 @@ const Landing = () => {
           <div className="card_2">
             <CardPrev
               card={{
-                name: '치아 보험',
+                cardName: '치아 보험',
                 date: '2023-10-13',
                 company: '교보생명',
                 cardColor: '#B290A9',
@@ -91,7 +96,7 @@ const Landing = () => {
           <div className="card_3">
             <CardPrev
               card={{
-                name: '암 보험',
+                cardName: '암 보험',
                 date: '2023-10-23',
                 company: '교보생명',
                 cardColor: '#3A71B0',
