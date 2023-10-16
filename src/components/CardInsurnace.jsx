@@ -1,39 +1,12 @@
 import axios from 'axios'
-import { v4 as uuidv4 } from 'uuid'
 
-const CardInsurance = async ({ userCards, setUserCards, setLoading }) => {
-  const getCurrentDate = () => {
-    const today = new Date()
-    const { getFullYear, getMonth, getDate } = today
-
-    const year = getFullYear.call(today)
-    const month = (getMonth.call(today) + 1).toString().padStart(2, '0')
-    const day = getDate.call(today).toString().padStart(2, '0')
-
-    return `${year}-${month}-${day}`
-  }
-
-  const CardColorList = [
-    '#DF6961',
-    '#B290A9',
-    '#495A73',
-    '#3A71B0',
-    '#8C86C3',
-    '#CC938D',
-    '#BDACF0',
-    '#2F4666',
-    '#6CB07F',
-    '#D9D9D9',
-  ]
-
+const CardInsurance = async ({ userCards, setUserCards, setLoading, uid }) => {
   try {
     setLoading(true)
     const res = await axios.get('/api/904/insurance_list')
-    const cash = []
-    console.log(res.data.result.slice(0, 3))
-    for (const r of res.data.result.slice(0, 3)) {
-      cash.push({
-        cardId: uuidv4(),
+
+    for (const r of res.data.result.slice(0, 2)) {
+      const temp = {
         cardName: r.상품이름,
         category: '보험',
         date: getCurrentDate(),
@@ -52,17 +25,49 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading }) => {
           10
         )}일`,
         cardColor: CardColorList[Math.floor(Math.random() * 10)],
+      }
+      console.log({
+        ...temp,
+        uid: uid,
       })
-    }
+      /* 청약정보 불러오기 카드 1개 */
+      const resCard = await axios.post('/api/246/postairtablecard', {
+        ...temp,
+        uid: uid,
+      })
 
-    // 상태 업데이트
-    const updatedUserCards = [...userCards, ...cash]
-    setUserCards(updatedUserCards)
+      setUserCards((prev) => [...prev, { ...temp, cardId: resCard.data.result }])
+
+      console.log('postairtablecard', resCard.data.result)
+    }
   } catch (e) {
     console.log(e)
   } finally {
     setLoading(false)
   }
+}
+
+const CardColorList = [
+  '#DF6961',
+  '#B290A9',
+  '#495A73',
+  '#3A71B0',
+  '#8C86C3',
+  '#CC938D',
+  '#BDACF0',
+  '#2F4666',
+  '#6CB07F',
+  '#D9D9D9',
+]
+
+const getCurrentDate = () => {
+  const today = new Date()
+  const { getFullYear, getMonth, getDate } = today
+  const year = getFullYear.call(today)
+  const month = (getMonth.call(today) + 1).toString().padStart(2, '0')
+  const day = getDate.call(today).toString().padStart(2, '0')
+
+  return `${year}-${month}-${day}`
 }
 
 export default CardInsurance

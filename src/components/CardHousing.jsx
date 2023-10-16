@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import '../style/Card.css'
 import axios from 'axios'
@@ -6,18 +6,17 @@ import '../style/CardHousing.css'
 import { v4 as uuidv4 } from 'uuid'
 import ModalHousing from './ModalHousing.jsx'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
+import { AuthContext } from '../provider/userContext'
 
 const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) => {
   const navigate = useNavigate()
+  const user = useContext(AuthContext)
   const getHousing = async () => {
     try {
-      setLoading(true)
       const res = await axios.get('/api/904/get_subscription_detail')
       return res.data.result
     } catch (e) {
       console.log(e)
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -89,6 +88,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
   const HousingtoCards = async () => {
     try {
       if (region !== '' && name !== '') {
+        setLoading(true)
         const housingList = await getHousing()
         const filtered = housingList.filter((apartment) => {
           const isAddressMatch = apartment.주소.includes(region)
@@ -100,7 +100,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
 
         const cash = {
           cardName: filtered[0].분양아파트명,
-          category: '청약',
+          category: '부동산',
           date: getCurrentDate(),
           company: filtered[0].건설업체명,
           pdfLink: '',
@@ -128,14 +128,20 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
           cardColor: colors,
         }
 
-        /* 청약정보 불러오기 카드 1개 */
+        /* 청약정보 저장하기 카드 1개 */
         const res = await axios.post('/api/246/postairtablecard', {
-          result: cash,
+          ...cash,
+          uid: user.uid,
         })
-        console.log('postairtablecard', res)
-
-        const updatedUserCards = [...userCards, { ...cash, cardId: uuidv4() }]
+        console.log({
+          ...cash,
+          uid: user.uid,
+        })
+        console.log('cardId', res.data.result)
+        const updatedUserCards = [...userCards, { ...cash, cardId: res.data.result }]
+        console.log(updatedUserCards)
         setUserCards(updatedUserCards)
+        setLoading(false)
         navigate('/home')
       }
     } catch (e) {

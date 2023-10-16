@@ -1,14 +1,20 @@
 import Modal from '../components/Modal.jsx'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useContext } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import useOnClickOutside from '../hooks/useOnClickOutside'
 import '../style/Card.css'
 import styled from 'styled-components'
+import axios from 'axios'
+import { storage } from '../../firebase.js'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { AuthContext } from '../provider/userContext.js'
 
-const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
+const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
   // 카드 추가, 수정인지 아닌지 관리하는 상태
   const [CardModifying, setCardModifying] = useState(false)
   const [CardAdding, setCardAdding] = useState(false)
+  const pdfInputRef = useRef(null)
+  const user = useContext(AuthContext)
 
   useEffect(() => {
     // 카드 추가화면일때 상태 변경
@@ -36,19 +42,12 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
 
   const card = state.card
 
-  useEffect(() => {
-    if (CardModifying) {
-      setCardName('')
-      setCardSummary('')
-    }
-  }, [CardModifying])
-
   // CardEdit
   const cardId = useParams().cardId
 
   const [CompanyName, setCompanyName] = useState(card.company)
   const [CardName, setCardName] = useState(card.cardName)
-  const [CardSummary, setCardSummary] = useState('')
+  const [CardSummary, setCardSummary] = useState(card.summary)
 
   const [selectedColorIndex, setSelectedColorIndex] = useState(9)
   const CardColorList = [
@@ -84,41 +83,91 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
 
   const textareaRef = useRef(null)
 
-  const getCurrentDate = () => {
-    const today = new Date()
-    const { getFullYear, getMonth, getDate } = today
-
-    const year = getFullYear.call(today)
-    const month = (getMonth.call(today) + 1).toString().padStart(2, '0')
-    const day = getDate.call(today).toString().padStart(2, '0')
-
-    return `${year}-${month}-${day}`
-  }
-
   const handleTextChange = (e) => {
     const value = e.target.value
     setCardSummary(value) // 내용 업데이트
-    const textarea = textareaRef.current
-    textarea.style.height = 0
-    textarea.style.height = 30 + textarea.scrollHeight + 'px'
   }
 
-  // CardEdit 요약하기 함수
-  const SummaryPdf = () => {
+  const cardAdd = async () => {
+    setLoading(true)
+    const pdfFile = pdfInputRef.current.files[0]
+    if (!pdfFile) {
+      alert('PDF파일을 선택하세요')
+      return
+    }
     // 회사명, 카드이름, 요약내용 모두 빈칸이 아니면 ->
-    if (CompanyName !== '' && CardName !== '' && CardSummary !== '') {
-      const cardIndex = userCards.findIndex((card) => card.cardId === cardId)
+    if (CompanyName == '' || CardName == '') {
+      alert('빈 레이블을 채워주세요')
+      return
+    }
 
-      // 카드 수정하기일때
-      if (!CardAdding) {
-        // 해당 인덱스의 객체를 복제하고, 원하는 속성들을 업데이트
+    try {
+      // 상태를 업데이트
+      const pdfRef = ref(storage, `pdf/${getCurrentDate()}`)
+      const snapshot = await uploadBytes(pdfRef, pdfFile)
+      const url = await getDownloadURL(snapshot.ref)
+      const summary = await axios.post('/api/904/summary_pdf', {
+        url: url,
+      })
+
+      const updatedCard = {
+        category: '보험',
+        date: getCurrentDate(),
+        pdfLink: url,
+        cardColor: CardColorList[selectedColorIndex],
+        cardName: CardName,
+        company: CompanyName,
+        summary: summary.data.content,
+      }
+      /* 청약정보 저장하기 카드 1개 */
+      const resCard = await axios.post('/api/246/postairtablecard', {
+        ...updatedCard,
+        uid: user.uid,
+      })
+      console.log({
+        ...updatedCard,
+        uid: user.uid,
+      })
+      console.log('postairtablecard', resCard)
+
+      const updatedCards = [...userCards, { ...updatedCard, cardId: resCard.data.result }]
+      console.log({ ...updatedCard, cardId: resCard.data.result })
+      setUserCards(updatedCards)
+      navigate('/home')
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const cardEdit = async () => {
+    // 회사명, 카드이름, 요약내용 모두 빈칸이 아니면 ->
+    try {
+      if (CompanyName !== '' && CardName !== '') {
+        setLoading(true)
+        const cardIndex = userCards.findIndex((card) => card.cardId == cardId)
+        console.log(userCards, cardId, cardIndex)
         const updatedCard = {
-          ...userCards[cardIndex],
+          cardId: card.cardId,
           cardName: CardName,
           company: CompanyName,
           summary: CardSummary,
+          cardColor: CardColorList[selectedColorIndex],
+          date: getCurrentDate(),
+          pdfLink: card.pdfLink,
+          category: card.category,
         }
-        // 전체 userCards 배열을 복제하고, 해당 인덱스의 객체를 업데이트된 객체로 변경
+
+        console.log({
+          ...updatedCard,
+          uid: user.uid,
+        })
+        await axios.put('/api/246/updateairtablecard', {
+          ...updatedCard,
+          uid: user.uid,
+        })
+
         const updatedCards = [
           ...userCards.slice(0, cardIndex),
           updatedCard,
@@ -126,26 +175,13 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
         ]
         // 상태를 업데이트
         setUserCards(updatedCards)
+        /* 업데이트 post */
         navigate('/home')
       }
-      // 카드 추가하기일때
-      else {
-        const updatedCard = {
-          cardId: cardId,
-          category: '보험',
-          date: getCurrentDate(),
-          pdfLink: '',
-          cardColor: CardColorList[selectedColorIndex],
-          cardName: CardName,
-          company: CompanyName,
-          summary: CardSummary,
-        }
-
-        const updatedCards = [...userCards, updatedCard]
-        // 상태를 업데이트
-        setUserCards(updatedCards)
-        navigate('/home')
-      }
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -182,6 +218,9 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
                       </option>
                       <option value="삼성생명" disabled={!CardModifying}>
                         삼성생명
+                      </option>
+                      <option value="기타" disabled={!CardModifying}>
+                        기타
                       </option>
                     </>
                   )}
@@ -226,15 +265,16 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
                 name="CardSummary"
                 placeholder="PDF 입력"
                 required
-                rows={1}
+                rows={'3'}
                 value={CardSummary}
                 ref={textareaRef}
                 onChange={handleTextChange}
-                style={{ overflowY: 'hidden' }} // overflowY를 hidden으로 설정하여 스크롤바가 나타나지 않게 합니다.
+                style={{ height: '30px' }}
               />
             </div>
           )}
 
+          {CardAdding && CardModifying && <input ref={pdfInputRef} type="file" accept=".pdf" />}
           {CardModifying && (
             <div className="Palette">
               <div className="PaletteSpan">색상 선택</div>
@@ -270,13 +310,13 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
               </>
             )}
             {CardModifying && !CardAdding && (
-              <button className="PdfSummary" onClick={SummaryPdf}>
-                PDF 요약하기
+              <button className="PdfSummary" onClick={cardEdit}>
+                수정하기
               </button>
             )}
-            {CardModifying && CardAdding && (
-              <button className="PdfSummary" onClick={SummaryPdf}>
-                카드 추가하기
+            {CardAdding && (
+              <button className="PdfSummary" onClick={cardAdd}>
+                PDF 요약하기
               </button>
             )}
           </div>
@@ -285,6 +325,17 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
     </div>
   )
 }
+const getCurrentDate = () => {
+  const today = new Date()
+  const { getFullYear, getMonth, getDate } = today
+
+  const year = getFullYear.call(today)
+  const month = (getMonth.call(today) + 1).toString().padStart(2, '0')
+  const day = getDate.call(today).toString().padStart(2, '0')
+
+  return `${year}-${month}-${day}`
+}
+
 const companies = ['교보생명', '롯데건설', '삼성물산', '삼성생명', '서울주택도시공사', '중앙건설']
 
 const CompanyImage = ({ company }) => {

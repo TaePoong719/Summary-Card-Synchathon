@@ -59,6 +59,7 @@ function App() {
             path="card/:cardId"
             element={
               <Card
+                setLoading={setLoading}
                 userCards={userCards}
                 setUserCards={setUserCards}
                 setIsModalOpen={setIsModalOpen}
@@ -98,6 +99,7 @@ function App() {
             element={
               <Card
                 userCards={userCards}
+                setLoading={setLoading}
                 setUserCards={setUserCards}
                 setIsModalOpen={setIsModalOpen}
               />

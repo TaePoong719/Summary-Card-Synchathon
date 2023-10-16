@@ -3,12 +3,13 @@ import CardPrev from '../components/CardPrev'
 import '../style/Home.css'
 import StyledButton from '../components/StyledButton'
 import Search from '../components/Search'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import CardPrevAdd from '../components/CardPrevAdd'
 import { TabletMin } from '../utils/responsive'
 import { Link, useLocation } from 'react-router-dom'
 import CardInsurance from '../components/CardInsurnace.jsx'
 import { v4 as uuidv4 } from 'uuid'
+import { AuthContext } from '../provider/userContext'
 
 const Home = ({
   userCards,
@@ -20,6 +21,7 @@ const Home = ({
 }) => {
   const location = useLocation()
   const cardId = uuidv4()
+  const uid = useContext(AuthContext).uid
 
   useEffect(() => {
     setSearchedCards(userCards)
@@ -30,7 +32,7 @@ const Home = ({
       <HeadlineContainer>
         <ButtonsContainer>
           <StyledButton
-            onClickHandler={() => CardInsurance({ userCards, setUserCards, setLoading })}
+            onClickHandler={() => CardInsurance({ userCards, setUserCards, setLoading, uid })}
           >
             <p>내 보험 {<br />}불러오기</p>
           </StyledButton>
