@@ -126,7 +126,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
             filtered[0].분양일정.ARRAY수1[1].청약접수년월일
           }\n2순위 청약지역:${filtered[0].분양일정.ARRAY수1[1].청약지역}
 `,
-          cardColor: `#${colors.join('')}`,
+          cardColor: colors,
         }
 
         const updatedUserCards = [...userCards, cash]
