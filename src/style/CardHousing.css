@@ -12,6 +12,9 @@
   text-align: center; /* 대부분의 브라우저에서의 텍스트 중앙 정렬 */
   text-align-last: center;
   border: 2px solid black;
+  background-color: white;
+  color: black;
+
 }
 
 .BtnContainer {
