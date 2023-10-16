@@ -14,7 +14,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 
 function App() {
   /* userCards는 유저의 카드, searchedCards는 유저가 카테고리를 클릭하거나, 검색을 했을 경우 화면에 보여지는 카드  */
-  const [userCards, setUserCards] = useState(testUserCard)
+  const [userCards, setUserCards] = useState([])
   const [searchedCards, setSearchedCards] = useState(userCards)
   // 모달 배경
   const location = useLocation()
@@ -25,28 +25,12 @@ function App() {
   const [loading, setLoading] = useState(false)
   const user = useContext(AuthContext)
 
-  useEffect(() => {
-    const fetchData = async (uid) => {
-      const res = await axios.post('/api/246/getairtableuser', {
-        uid: uid,
-      })
-      return res
-    }
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const res = await fetchData(user.uid)
-        console.log('getairtableuser', res)
-      }
-    })
-  }, [])
-
   return (
     <div>
       {loading && <Loading />}
 
       <Routes location={background || location}>
-        <Route index element={<Landing />} />
+        <Route index element={<Landing setUserCards={setUserCards} />} />
         <Route
           path="/"
           element={

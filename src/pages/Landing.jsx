@@ -10,7 +10,7 @@ import CardPrev from '../components/CardPrev'
 import axios from 'axios'
 import { AuthContext } from '../provider/userContext'
 
-const Landing = () => {
+const Landing = ({ setUserCards }) => {
   const provider = new GoogleAuthProvider()
   const navigate = useNavigate()
 
@@ -26,6 +26,10 @@ const Landing = () => {
         phone: '010-0000-0000',
       })
       console.log('login_card', res)
+      if (res.result) {
+        setUserCards(res.result)
+      }
+
       navigate('/home')
     } catch (e) {
       alert(e)
