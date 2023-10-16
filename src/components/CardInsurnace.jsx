@@ -11,7 +11,7 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading, uid }) => {
         category: '보험',
         date: getCurrentDate(),
         company: r.회사이름,
-        pdfLink: '',
+        pdfLink: 'www.naver.com',
         summary: `보장혜택: ${r.보장혜택명}\n회사제공혜택: ${
           r.회사제공혜택명
         }\n 계약시작일: ${r.계약시작일.slice(0, 4)}년 ${parseInt(
@@ -31,14 +31,14 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading, uid }) => {
         uid: uid,
       })
       /* 청약정보 불러오기 카드 1개 */
-      const resCard = await axios.post('/api/246/postairtablecard', {
+      const resCard = await axios.post('/api/246/pdflinkcard', {
         ...temp,
         uid: uid,
       })
 
       setUserCards((prev) => [...prev, { ...temp, cardId: resCard.data.result }])
 
-      console.log('postairtablecard', resCard.data.result)
+      console.log('pdflinkcard', resCard.data.result)
     }
   } catch (e) {
     console.log(e)

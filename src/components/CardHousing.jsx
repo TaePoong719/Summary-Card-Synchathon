@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import '../style/Card.css'
 import axios from 'axios'
 import '../style/CardHousing.css'
-import { v4 as uuidv4 } from 'uuid'
 import ModalHousing from './ModalHousing.jsx'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
 import { AuthContext } from '../provider/userContext'
@@ -129,7 +128,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
         }
 
         /* 청약정보 저장하기 카드 1개 */
-        const res = await axios.post('/api/246/postairtablecard', {
+        const res = await axios.post('/api/246/pdflinkcard', {
           ...cash,
           uid: user.uid,
         })
@@ -137,15 +136,16 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
           ...cash,
           uid: user.uid,
         })
-        console.log('cardId', res.data.result)
+        console.log('pdflinkcard', res.data.result)
         const updatedUserCards = [...userCards, { ...cash, cardId: res.data.result }]
         console.log(updatedUserCards)
         setUserCards(updatedUserCards)
-        setLoading(false)
         navigate('/home')
       }
     } catch (e) {
       console.log(e)
+    } finally {
+      setLoading(false)
     }
   }
 
