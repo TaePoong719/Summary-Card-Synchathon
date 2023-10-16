@@ -1,14 +1,13 @@
-import '../style/ModalHousing.css'
 import React, { forwardRef, useEffect } from 'react'
+import '../style/ModalHousing.css'
 
-// eslint-disable-next-line react/prop-types
 const Modal = forwardRef(({ children, setIsModalOpen }, ref) => {
   useEffect(() => {
     setIsModalOpen(true)
     return () => {
       setIsModalOpen(false)
     }
-  }, [])
+  }, [setIsModalOpen])
 
   return (
     <div className="modalDivHousing">

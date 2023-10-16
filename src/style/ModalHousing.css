@@ -17,27 +17,30 @@
 }
 
 .modalHousing {
-  background-color: white;
+  background-color: #eeeeee;
   top: 3%;
   width: 100%;
-  max-width: 400px;
-  min-height: 500px;
-  border-radius: 20px;
+  max-width: 600px;
+  min-height: 400px;
+  border-radius: 40px;
   position: relative;
   z-index: 100;
   overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 @media (max-width: 768px) {
   /* Styles for screens with a maximum width of 768px (e.g., mobile devices) */
   .modalHousing {
     /* Modify styles for modal content */
-    background-color: white;
-    top: 5%;
-    width: 80%;
-    height: auto;
+    background-color: #eeeeee;
+    width: 90%;
+    height: 45%;
     max-width: 700px; /* Adjust to take up the full width of the screen */
-    min-height: 400px; /* Take up the full viewport height */
+    min-height: 300px; /* Take up the full viewport height */
     border-radius: 20px;
     position: relative;
     z-index: 100;
