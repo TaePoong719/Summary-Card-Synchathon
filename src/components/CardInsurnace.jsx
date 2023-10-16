@@ -30,14 +30,15 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading }) => {
     setLoading(true)
     const res = await axios.get('/api/904/insurance_list')
     const cash = []
-    for (const r of res.data.result) {
+    console.log(res.data.result.slice(0, 3))
+    for (const r of res.data.result.slice(0, 3)) {
       cash.push({
         cardId: uuidv4(),
         cardName: r.상품이름,
         category: '보험',
         date: getCurrentDate(),
         company: r.회사이름,
-        pdfLink: 'https://naver.com',
+        pdfLink: '',
         summary: `보장혜택: ${r.보장혜택명}\n회사제공혜택: ${
           r.회사제공혜택명
         }\n 계약시작일: ${r.계약시작일.slice(0, 4)}년 ${parseInt(

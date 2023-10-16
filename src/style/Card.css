@@ -199,7 +199,7 @@ select::-ms-expand {
   min-width: 110px;
   min-height: 50px;
   background-color: white;
-  color: #5289ff;
+  color: black;
   border: none;
   border-radius: 10px;
   margin-right: 10px; /* Adding some space between the buttons */
@@ -214,7 +214,7 @@ select::-ms-expand {
   min-width: 110px;
   min-height: 50px;
   background-color: white;
-  color: #5289ff;
+  color: black;
   border: none;
   border-radius: 10px;
   margin-right: 10px; /* Adding some space between the buttons */
@@ -229,7 +229,7 @@ select::-ms-expand {
   min-width: 110px;
   min-height: 50px;
   background-color: white;
-  color: #5289ff;
+  color: black;
   border: none;
   border-radius: 10px;
   margin-left: 10px; /* Adding some space between the buttons */
@@ -383,7 +383,7 @@ select::-ms-expand {
     min-width: 110px;
     min-height: 50px;
     background-color: white;
-    color: #5289ff;
+    color: black;
     border: none;
     border-radius: 10px;
     margin-right: 10px; /* Adding some space between the buttons */
@@ -398,7 +398,7 @@ select::-ms-expand {
     min-width: 110px;
     min-height: 50px;
     background-color: white;
-    color: #5289ff;
+    color: black;
     border: none;
     border-radius: 10px;
     margin-right: 10px; /* Adding some space between the buttons */
@@ -411,7 +411,7 @@ select::-ms-expand {
     width: 50%;
     height: 50%;
     background-color: white;
-    color: #5289ff;
+    color: black;
     border: none;
     border-radius: 10px;
     margin-left: 10px; /* Adding some space between the buttons */

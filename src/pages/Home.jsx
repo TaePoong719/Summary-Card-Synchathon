@@ -70,7 +70,7 @@ const Home = ({
               category: '보험',
               date: '',
               company: '',
-              pdfLink: 'https://naver.com',
+              pdfLink: '',
               summary: ``,
               cardColor: '#DF6962',
             },

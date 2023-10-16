@@ -99,12 +99,11 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
         })
 
         const cash = {
-          cardId: uuidv4(),
           cardName: filtered[0].분양아파트명,
           category: '청약',
           date: getCurrentDate(),
           company: filtered[0].건설업체명,
-          pdfLink: 'https://naver.com',
+          pdfLink: '',
           summary: `주소:${filtered[0].주소}\n지역:${filtered[0].지역}\n청약가능통장:${
             filtered[0].청약가능통장
           }\n총세대수:${filtered[0].총세대수}\n건설업체명:${
@@ -129,7 +128,13 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
           cardColor: colors,
         }
 
-        const updatedUserCards = [...userCards, cash]
+        /* 청약정보 불러오기 카드 1개 */
+        const res = await axios.post('/api/246/postairtablecard', {
+          result: cash,
+        })
+        console.log('postairtablecard', res)
+
+        const updatedUserCards = [...userCards, { ...cash, cardId: uuidv4() }]
         setUserCards(updatedUserCards)
         navigate('/home')
       }

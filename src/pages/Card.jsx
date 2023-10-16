@@ -134,7 +134,7 @@ const Card = ({ userCards, setUserCards, setIsModalOpen }) => {
           cardId: cardId,
           category: '보험',
           date: getCurrentDate(),
-          pdfLink: 'https://naver.com',
+          pdfLink: '',
           cardColor: CardColorList[selectedColorIndex],
           cardName: CardName,
           company: CompanyName,
