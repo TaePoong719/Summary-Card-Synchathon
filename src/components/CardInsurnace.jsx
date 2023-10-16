@@ -13,6 +13,19 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading }) => {
     return `${year}-${month}-${day}`
   }
 
+  const CardColorList = [
+    '#DF6961',
+    '#B290A9',
+    '#495A73',
+    '#3A71B0',
+    '#8C86C3',
+    '#CC938D',
+    '#BDACF0',
+    '#2F4666',
+    '#6CB07F',
+    '#D9D9D9',
+  ]
+
   try {
     setLoading(true)
     const res = await axios.get('/api/904/insurance_list')
@@ -37,13 +50,7 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading }) => {
           r.계약종료일.slice(6, 8),
           10
         )}일`,
-        cardColor: `#${Math.floor(Math.random() * 256)
-          .toString(16)
-          .padStart(2, '0')}${Math.floor(Math.random() * 256)
-          .toString(16)
-          .padStart(2, '0')}${Math.floor(Math.random() * 256)
-          .toString(16)
-          .padStart(2, '0')}`,
+        cardColor: CardColorList[Math.floor(Math.random() * 10)],
       })
     }
 

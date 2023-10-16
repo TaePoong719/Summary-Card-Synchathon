@@ -45,15 +45,23 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
 
   const [region, setRegion] = useState('서울')
   const [name, setName] = useState('')
-  const [colors, setColors] = useState([])
+  const [colors, setColors] = useState('')
+
+  const CardColorList = [
+    '#DF6961',
+    '#B290A9',
+    '#495A73',
+    '#3A71B0',
+    '#8C86C3',
+    '#CC938D',
+    '#BDACF0',
+    '#2F4666',
+    '#6CB07F',
+    '#D9D9D9',
+  ]
 
   useEffect(() => {
-    const randomHex = () =>
-      Math.floor(Math.random() * 256)
-        .toString(16)
-        .padStart(2, '0')
-    const [r, g, b] = Array(3).fill().map(randomHex)
-    setColors([r, g, b])
+    setColors(CardColorList[Math.floor(Math.random() * 10)])
   }, [])
 
   useEffect(() => {
@@ -118,7 +126,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
             filtered[0].분양일정.ARRAY수1[1].청약접수년월일
           }\n2순위 청약지역:${filtered[0].분양일정.ARRAY수1[1].청약지역}
 `,
-          cardColor: `#${colors.join('')}`,
+          cardColor: colors,
         }
 
         const updatedUserCards = [...userCards, cash]
@@ -133,73 +141,59 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
   return (
     <div>
       <ModalHousing setIsModalOpen={setIsModalOpen} ref={modalRef}>
-        <div
-          className="ModalContainer"
-          style={{
-            backgroundColor: `#${colors.join('')}`,
-            top: '3%',
-            width: '100%',
-            maxWidth: '400px',
-            minHeight: '500px',
-            borderRadius: '20px',
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-around', // 오타 수정
-            alignItems: 'center', // 오타 수정
-            zIndex: 101,
-          }}
-        >
-          <div className="RegionSelectdiv">
-            <select
-              defaultValue={'서울'}
-              onChange={(e) => setRegion(e.target.value)}
-              className="RegionSelect"
-            >
-              <option value="서울">서울</option>
-              <option value="인천">인천</option>
-              <option value="광명">광명</option>
-              <option value="충주">충주</option>
-            </select>
-          </div>
-          <div>
-            {region === '서울' && (
-              <div className="NameSelectdiv">
-                <select onChange={(e) => setName(e.target.value)} className="NameSelect">
-                  <option value="래미안 라그란데">래미안 라그란데</option>
-                  <option value="강동중앙하이츠시티">강동중앙하이츠시티</option>
-                </select>
-              </div>
-            )}
-            {region === '인천' && (
-              <div className="NameSelectdiv">
-                <select onChange={(e) => setName(e.target.value)} className="NameSelect">
-                  <option value="검단신도시롯데캐슬넥스티엘">검단신도시롯데캐슬넥스티엘</option>
-                </select>
-              </div>
-            )}
-            {region === '광명' && (
-              <div className="NameSelectdiv">
-                <select onChange={(e) => setName(e.target.value)} className="NameSelect">
-                  <option value="트리우스광명">트리우스광명</option>
-                </select>
-              </div>
-            )}
-            {region === '충주' && (
-              <div className="NameSelectdiv">
-                <select onChange={(e) => setName(e.target.value)} className="NameSelect">
-                  <option value="SH 항동 공공주택지구 2단지 공공분양">
-                    SH 항동 공공주택지구 2단지 공공분양
-                  </option>
-                </select>
-              </div>
-            )}
-          </div>
-          <div className="BtnContainer">
-            <button onClick={HousingtoCards} className="housingCardBtn">
-              불러오기
-            </button>
-          </div>
+        <h1 style={{ fontWeight: 'bolder', marginTop: '-3%', fontSize: '33px' }}>
+          {' '}
+          청약정보 가져오기{' '}
+        </h1>
+        <div className="RegionSelectdiv">
+          <select
+            defaultValue={'서울'}
+            onChange={(e) => setRegion(e.target.value)}
+            className="RegionSelect"
+          >
+            <option value="서울">서울</option>
+            <option value="인천">인천</option>
+            <option value="광명">광명</option>
+            <option value="충주">충주</option>
+          </select>
+        </div>
+        <div>
+          {region === '서울' && (
+            <div className="NameSelectdiv">
+              <select onChange={(e) => setName(e.target.value)} className="NameSelect">
+                <option value="래미안 라그란데">래미안 라그란데</option>
+                <option value="강동중앙하이츠시티">강동중앙하이츠시티</option>
+              </select>
+            </div>
+          )}
+          {region === '인천' && (
+            <div className="NameSelectdiv">
+              <select onChange={(e) => setName(e.target.value)} className="NameSelect">
+                <option value="검단신도시롯데캐슬넥스티엘">검단신도시롯데캐슬넥스티엘</option>
+              </select>
+            </div>
+          )}
+          {region === '광명' && (
+            <div className="NameSelectdiv">
+              <select onChange={(e) => setName(e.target.value)} className="NameSelect">
+                <option value="트리우스광명">트리우스광명</option>
+              </select>
+            </div>
+          )}
+          {region === '충주' && (
+            <div className="NameSelectdiv">
+              <select onChange={(e) => setName(e.target.value)} className="NameSelect">
+                <option value="SH 항동 공공주택지구 2단지 공공분양">
+                  SH 항동 공공주택지구 2단지 공공분양
+                </option>
+              </select>
+            </div>
+          )}
+        </div>
+        <div className="BtnContainer">
+          <button onClick={HousingtoCards} className="housingCardBtn">
+            불러오기
+          </button>
         </div>
       </ModalHousing>
     </div>
