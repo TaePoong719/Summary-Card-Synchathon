@@ -6,8 +6,9 @@ import googleIcon from '../../public/googleIcon.svg'
 import styled from 'styled-components'
 import CardPrev from '../components/CardPrev'
 import axios from 'axios'
+import CardInsurance from '../components/CardInsurnace'
 
-const Landing = ({ setUserCards, setLoading }) => {
+const Landing = ({ setUserCards, setLoading, userCards }) => {
   const provider = new GoogleAuthProvider()
   const navigate = useNavigate()
 
@@ -28,22 +29,29 @@ const Landing = ({ setUserCards, setLoading }) => {
         email: user.email,
         phone: '010-0000-0000',
       })
-      const userCards = []
-      const cardIdArr = res.data.result.split(', ')
-      console.log('login_card', res.data.result)
-      for (let id of cardIdArr) {
-        console.log('id', id)
-        const res = await axios.post('/api/246/getairtablecard', {
-          cardId: +id,
-        })
-        const card = {
-          ...res.data.result,
-          category: res.data.result[`category (from category_number)`][0],
+      if (res.data.result !== 'null') {
+        const userCards = []
+        const cardIdArr = res.data.result.split(', ')
+        console.log('login_card', res.data.result)
+        for (let id of cardIdArr) {
+          console.log('id', id)
+          const res = await axios.post('/api/246/getairtablecard', {
+            cardId: +id,
+          })
+          const card = {
+            ...res.data.result,
+            category: res.data.result[`category (from category_number)`][0],
+          }
+          userCards.push(card)
         }
-        userCards.push(card)
+        setUserCards(userCards)
+        console.log(userCards)
+      } else {
+        const uid = user.uid
+        setUserCards([])
+        CardInsurance({ userCards, setUserCards, setLoading, uid })
       }
-      setUserCards(userCards)
-      console.log(userCards)
+
       navigate('/home')
     } catch (e) {
       alert(e)
@@ -148,7 +156,7 @@ const Landing = ({ setUserCards, setLoading }) => {
           }}
         ></div>
         <div className="landing4__CardDetailDiv">
-          <div className="landing4__UpperBox">
+          <div style={{ marginTop: '20px' }} className="landing4__UpperBox">
             <div className="landing4__InnerBox">
               <div className="landing4__ImgBox">
                 <img
@@ -166,7 +174,7 @@ const Landing = ({ setUserCards, setLoading }) => {
                 <h1 className="landing4__upper2">교보생명</h1>
               </div>
               <div className="landing4__CardNameInput">
-                <h1 className="landing4__upper2">이륜차 상해 보험</h1>
+                <h2 className="landing4__upper2">이륜차 상해 보험</h2>
               </div>
             </div>
           </div>
@@ -319,10 +327,11 @@ const Section4 = styled(Section)`
   }
 
   .landing4__h1 {
-    font-size: 2.2rem;
-    font-weight: bold;
+    font-size: 1.8rem;
   }
-
+  .landing4__h2 {
+    font-size: 2.2 rem;
+  }
   .landing4__h3 {
     color: #6b7684;
     font-size: 1.2rem;
@@ -337,6 +346,9 @@ const Section4 = styled(Section)`
   }
   .landing4__upper {
     text-align: center;
+  }
+  .landing4__upper2 {
+    font-weight: normal;
   }
   .landing4__InnerBox {
     display: flex;
@@ -376,6 +388,8 @@ const Section4 = styled(Section)`
     color: white;
     align-self: flex-end;
     margin-right: 5%;
+    font-weight: bold;
+    font-size: 1.5rem;
   }
 
   .landing4__CardSummary {
@@ -386,13 +400,12 @@ const Section4 = styled(Section)`
 
   .landing4__dot-list {
     text-align: left;
-    padding-left: 20px; /* 점과 텍스트 사이의 간격을 조절할 수 있습니다. */
+    padding-left: 20px;
   }
 
   .landing4__dot-list li {
     color: white;
-    margin-bottom: 10px; /* 각 목록 항목 간의 아래 여백을 늘립니다. */
-    font-weight: bold;
+    margin-bottom: 10px;
   }
 `
 

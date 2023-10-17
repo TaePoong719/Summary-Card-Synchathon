@@ -140,7 +140,6 @@ select::-ms-expand {
   color: #000;
   resize: none; /* 사용자가 크기를 조절하지 못하게 함 */
   min-height: 5rem;
-  overflow-y: hidden;
 }
 
 .Palette {

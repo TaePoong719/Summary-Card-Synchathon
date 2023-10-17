@@ -1,10 +1,11 @@
 import axios from 'axios'
 
-const CardInsurance = async ({ userCards, setUserCards, setLoading, uid }) => {
+const CardInsurance = async ({ setUserCards, setLoading, uid }) => {
   try {
     setLoading(true)
     const res = await axios.get('/api/904/insurance_list')
-
+    const resCards = []
+    setLoading(true)
     for (const r of res.data.result.slice(0, 2)) {
       const temp = {
         cardName: r.상품이름,
@@ -30,16 +31,15 @@ const CardInsurance = async ({ userCards, setUserCards, setLoading, uid }) => {
         ...temp,
         uid: uid,
       })
+      setLoading(true)
       /* 청약정보 불러오기 카드 1개 */
       const resCard = await axios.post('/api/246/pdflinkcard', {
         ...temp,
         uid: uid,
       })
-
-      setUserCards((prev) => [...prev, { ...temp, cardId: resCard.data.result }])
-
-      console.log('pdflinkcard', resCard.data.result)
+      resCards.push({ ...temp, cardId: resCard.data.result })
     }
+    setUserCards((prev) => [...prev, ...resCards])
   } catch (e) {
     console.log(e)
   } finally {

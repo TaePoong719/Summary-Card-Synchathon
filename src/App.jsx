@@ -30,7 +30,12 @@ function App() {
       {loading && <Loading />}
 
       <Routes location={background || location}>
-        <Route index element={<Landing setLoading={setLoading} setUserCards={setUserCards} />} />
+        <Route
+          index
+          element={
+            <Landing setLoading={setLoading} userCards={userCards} setUserCards={setUserCards} />
+          }
+        />
         <Route
           path="/"
           element={
