@@ -249,13 +249,7 @@ const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
           </div>
           {!CardModifying && (
             <div className="CardSummary">
-              <span>
-                {card.summary
-                  .trim()
-                  .split('\n')
-                  .map((line) => `· ${line}`)
-                  .join('\n')}
-              </span>
+              <span>{card.summary.trim()}</span>
             </div>
           )}
 

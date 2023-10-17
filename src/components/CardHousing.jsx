@@ -153,8 +153,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
     <div>
       <ModalHousing setIsModalOpen={setIsModalOpen} ref={modalRef}>
         <h1 style={{ fontWeight: 'bolder', marginTop: '-3%', fontSize: '33px' }}>
-          {' '}
-          청약정보 가져오기{' '}
+          청약정보 가져오기
         </h1>
         <div className="RegionSelectdiv">
           <select
