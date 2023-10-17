@@ -259,7 +259,7 @@ const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
             </div>
           )}
 
-          {CardModifying && (
+          {CardModifying && !CardAdding && (
             <div className="PdfInput">
               <textarea
                 name="CardSummary"
@@ -274,7 +274,12 @@ const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
             </div>
           )}
 
-          {CardAdding && CardModifying && <input ref={pdfInputRef} type="file" accept=".pdf" />}
+          {CardAdding && CardModifying && (
+            <>
+              <div style={{ margin: '100px 0 30px 0' }}>요약하고 싶은 PDF를 입력해주세요</div>
+              <input style={{ marginBottom: '40px' }} ref={pdfInputRef} type="file" accept=".pdf" />
+            </>
+          )}
           {CardModifying && (
             <div className="Palette">
               <div className="PaletteSpan">색상 선택</div>

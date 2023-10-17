@@ -18,17 +18,29 @@ const Landing = ({ setUserCards }) => {
     try {
       const { user } = await signInWithPopup(auth, provider)
       console.log('로그인된', user)
-
+      console.log({
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        phone: '010-0000-0000',
+      })
       const res = await axios.post('/api/850/login_card_info', {
         uid: user.uid,
         name: user.displayName,
         email: user.email,
         phone: '010-0000-0000',
       })
-      console.log('login_card', res)
-      if (res.result) {
-        setUserCards(res.result)
+      const userCards = []
+      const cardIdArr = res.data.result.split(', ')
+      console.log('login_card', res.data.result)
+      for (let id of cardIdArr) {
+        console.log('id', id)
+        const res = await axios.post('/api/246/getairtablecard', {
+          cardId: +id,
+        })
+        userCards.push(res.data.result)
       }
+      setUserCards(userCards)
 
       navigate('/home')
     } catch (e) {
