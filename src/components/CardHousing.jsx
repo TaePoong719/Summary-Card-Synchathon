@@ -102,7 +102,7 @@ const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) =>
           category: '부동산',
           date: getCurrentDate(),
           company: filtered[0].건설업체명,
-          pdfLink: '',
+          pdfLink: 'www.naver.com',
           summary: `주소:${filtered[0].주소}\n지역:${filtered[0].지역}\n청약가능통장:${
             filtered[0].청약가능통장
           }\n총세대수:${filtered[0].총세대수}\n건설업체명:${

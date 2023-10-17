@@ -1,21 +1,19 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { auth } from '../../firebase'
-import { useContext } from 'react'
-import AuthProvider from '../provider/userProvider'
 import '../style/Landing.css'
 import googleIcon from '../../public/googleIcon.svg'
 import styled from 'styled-components'
 import CardPrev from '../components/CardPrev'
 import axios from 'axios'
-import { AuthContext } from '../provider/userContext'
 
-const Landing = ({ setUserCards }) => {
+const Landing = ({ setUserCards, setLoading }) => {
   const provider = new GoogleAuthProvider()
   const navigate = useNavigate()
 
   const handleAuth = async () => {
     try {
+      setLoading(true)
       const { user } = await signInWithPopup(auth, provider)
       console.log('로그인된', user)
       console.log({
@@ -38,14 +36,20 @@ const Landing = ({ setUserCards }) => {
         const res = await axios.post('/api/246/getairtablecard', {
           cardId: +id,
         })
-        userCards.push(res.data.result)
+        const card = {
+          ...res.data.result,
+          category: res.data.result[`category (from category_number)`][0],
+        }
+        userCards.push(card)
       }
       setUserCards(userCards)
-
+      console.log(userCards)
       navigate('/home')
     } catch (e) {
       alert(e)
       console.log(e)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -382,12 +386,10 @@ const Section4 = styled(Section)`
 
   .landing4__dot-list {
     text-align: left;
-    list-style: disc; /* 원 모양의 점을 표시합니다. */
     padding-left: 20px; /* 점과 텍스트 사이의 간격을 조절할 수 있습니다. */
   }
 
   .landing4__dot-list li {
-    list-style: disc; /* 원 모양의 점을 표시합니다. */
     color: white;
     margin-bottom: 10px; /* 각 목록 항목 간의 아래 여백을 늘립니다. */
     font-weight: bold;

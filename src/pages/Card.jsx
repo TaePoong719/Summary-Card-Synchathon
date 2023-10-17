@@ -301,9 +301,13 @@ const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
           <div className="Buttons">
             {!CardModifying && (
               <>
-                <a to={card.pdfLink} target="_blank">
-                  <button className="PdfDetail">PDF 보러가기</button>
-                </a>
+                {card.pdfLink === 'www.naver.com' ? (
+                  <></>
+                ) : (
+                  <button className="PdfDetail" onClick={() => seePdf(card.pdfLink)}>
+                    PDF {<br />}보러가기
+                  </button>
+                )}
                 <button
                   className="LinkToCardEdit"
                   onClick={() => {
@@ -330,6 +334,14 @@ const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
     </div>
   )
 }
+
+const seePdf = (link) => {
+  const alink = document.createElement('a')
+  alink.href = link
+  alink.target = '_black'
+  alink.click()
+}
+
 const getCurrentDate = () => {
   const today = new Date()
   const { getFullYear, getMonth, getDate } = today
