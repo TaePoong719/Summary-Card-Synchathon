@@ -106,6 +106,9 @@ const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
       const pdfRef = ref(storage, `pdf/${getCurrentDate()}`)
       const snapshot = await uploadBytes(pdfRef, pdfFile)
       const url = await getDownloadURL(snapshot.ref)
+      navigate('/home')
+      setLoading(false)
+      alert('현재 AI가 요약중입니다. 요약이 끝나 카드가 완성되면 알려드리겠습니다.')
       const summary = await axios.post('/api/904/summary_pdf', {
         url: url,
       })
@@ -133,9 +136,9 @@ const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
       const updatedCards = [...userCards, { ...updatedCard, cardId: resCard.data.result }]
       console.log({ ...updatedCard, cardId: resCard.data.result })
       setUserCards(updatedCards)
-      navigate('/home')
+      alert('요약이 성공적으로 이뤄졌습니다.')
     } catch (e) {
-      console.log(e)
+      alert(e)
     } finally {
       setLoading(false)
     }
