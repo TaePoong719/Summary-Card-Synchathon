@@ -8,8 +8,12 @@ import axios from 'axios'
 import { storage } from '../../firebase.js'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { AuthContext } from '../provider/userContext.js'
+import { useRecoilState } from 'recoil'
+import { userCardsState } from '../atom/userCardState.js'
 
-const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
+const Card = ({ setIsModalOpen, setLoading }) => {
+  const [userCards, setUserCards] = useRecoilState(userCardsState)
+
   // 카드 추가, 수정인지 아닌지 관리하는 상태
   const [CardModifying, setCardModifying] = useState(false)
   const [CardAdding, setCardAdding] = useState(false)
@@ -93,11 +97,13 @@ const Card = ({ userCards, setUserCards, setIsModalOpen, setLoading }) => {
     const pdfFile = pdfInputRef.current.files[0]
     if (!pdfFile) {
       alert('PDF파일을 선택하세요')
+      setLoading(false)
       return
     }
     // 회사명, 카드이름, 요약내용 모두 빈칸이 아니면 ->
     if (CompanyName == '' || CardName == '') {
       alert('빈 레이블을 채워주세요')
+      setLoading(false)
       return
     }
 

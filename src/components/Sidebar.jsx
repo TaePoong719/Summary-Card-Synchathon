@@ -1,11 +1,17 @@
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { MobileResponsive } from '../utils/responsive'
+import { searchedUserCardsState, userCardsState } from '../atom/userCardState'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-const Sidebar = ({ userCards, setSearchedCards }) => {
+const Sidebar = () => {
+  const userCards = useRecoilValue(userCardsState)
+  const setSearchedCards = useSetRecoilState(searchedUserCardsState)
   const [activeCategory, setActiveCategory] = useState('전체')
   const [displaySidebar, setDisplaySidebar] = useState(false)
   const categories = ['전체', '부동산', '보험', '은행', '증권', '기타']
+  const isResponsiveSidebar = MobileResponsive()
+
   const onClickHandler = useCallback((category) => {
     setActiveCategory(category)
     if (category === '전체') {
@@ -16,8 +22,6 @@ const Sidebar = ({ userCards, setSearchedCards }) => {
       setDisplaySidebar(false)
     }
   })
-
-  const isResponsiveSidebar = MobileResponsive()
 
   if (isResponsiveSidebar) {
     return (

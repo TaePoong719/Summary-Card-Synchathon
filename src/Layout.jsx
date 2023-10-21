@@ -6,8 +6,7 @@ import { MobileResponsive } from './utils/responsive'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from './provider/userContext'
 
-const Layout = ({ userCards, setUserCards, searchedCards, setSearchedCards }) => {
-  /* Mobile, SmallMobile 훅이 변할 때 마다 컴포넌트가 다시 재 렌더링 될텐데 이때 오류가 발생함 왜?*/
+const Layout = () => {
   let isResponsiveSidebar = 'false'
   const isResponsive = MobileResponsive()
   const user = useContext(AuthContext)
@@ -27,7 +26,7 @@ const Layout = ({ userCards, setUserCards, searchedCards, setSearchedCards }) =>
     <>
       <Header />
       <Container $isResponsive={isResponsiveSidebar}>
-        <Sidebar userCards={userCards} setSearchedCards={setSearchedCards} />
+        <Sidebar />
         <InnerContainer $isResponsive={isResponsiveSidebar}>
           <Outlet />
         </InnerContainer>

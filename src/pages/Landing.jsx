@@ -7,8 +7,11 @@ import styled from 'styled-components'
 import CardPrev from '../components/CardPrev'
 import axios from 'axios'
 import CardInsurance from '../components/CardInsurnace'
+import { useRecoilState } from 'recoil'
+import { userCardsState } from '../atom/userCardState'
 
-const Landing = ({ setUserCards, setLoading, userCards }) => {
+const Landing = ({ setLoading }) => {
+  const [userCards, setUserCards] = useRecoilState(userCardsState)
   const provider = new GoogleAuthProvider()
   const navigate = useNavigate()
 
@@ -16,13 +19,6 @@ const Landing = ({ setUserCards, setLoading, userCards }) => {
     try {
       setLoading(true)
       const { user } = await signInWithPopup(auth, provider)
-      console.log('로그인된', user)
-      console.log({
-        uid: user.uid,
-        name: user.displayName,
-        email: user.email,
-        phone: '010-0000-0000',
-      })
       const res = await axios.post('/api/850/login_card_info', {
         uid: user.uid,
         name: user.displayName,
@@ -32,9 +28,7 @@ const Landing = ({ setUserCards, setLoading, userCards }) => {
       if (res.data.result !== 'null') {
         const userCards = []
         const cardIdArr = res.data.result.split(', ')
-        console.log('login_card', res.data.result)
         for (let id of cardIdArr) {
-          console.log('id', id)
           const res = await axios.post('/api/246/getairtablecard', {
             cardId: +id,
           })
@@ -45,11 +39,10 @@ const Landing = ({ setUserCards, setLoading, userCards }) => {
           userCards.push(card)
         }
         setUserCards(userCards)
-        console.log(userCards)
       } else {
         const uid = user.uid
         setUserCards([])
-        CardInsurance({ userCards, setUserCards, setLoading, uid })
+        CardInsurance({ setUserCards, setLoading, uid })
       }
 
       navigate('/home')

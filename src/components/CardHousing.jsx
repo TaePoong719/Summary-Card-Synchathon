@@ -6,8 +6,11 @@ import '../style/CardHousing.css'
 import ModalHousing from './ModalHousing.jsx'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
 import { AuthContext } from '../provider/userContext'
+import { userCardsState } from '../atom/userCardState'
+import { useRecoilState } from 'recoil'
 
-const CardHousing = ({ userCards, setUserCards, setLoading, setIsModalOpen }) => {
+const CardHousing = ({ setLoading, setIsModalOpen }) => {
+  const [userCards, setUserCards] = useRecoilState(userCardsState)
   const navigate = useNavigate()
   const user = useContext(AuthContext)
   const getHousing = async () => {

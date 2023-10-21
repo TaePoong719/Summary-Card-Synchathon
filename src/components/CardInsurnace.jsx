@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { useSetRecoilState } from 'recoil'
+import { userCardsState } from '../atom/userCardState'
 
 const CardInsurance = async ({ setUserCards, setLoading, uid }) => {
   try {

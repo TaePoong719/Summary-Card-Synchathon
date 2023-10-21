@@ -6,7 +6,6 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../firebase'
 
 const Header = () => {
-  const user = useContext(AuthContext)
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [userData, setUserData] = useState({})

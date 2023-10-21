@@ -1,27 +1,19 @@
 import styled from 'styled-components'
 import '../style/CardPrev.css'
 
-const CardPrev = ({ card }) => {
+const CardPreview = ({ card }) => {
   return (
     <Container $color={card.cardColor}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          padding: '0 15px',
-          boxSizing: 'border-box',
-        }}
-      >
+      <HeadContainer>
         <CompanyImage company={card.company}></CompanyImage>
         <h3>{card.company}</h3>
-      </div>
+      </HeadContainer>
       <h1>{card.cardName}</h1>
       <h4>{card.date}</h4>
     </Container>
   )
 }
+
 const companies = ['교보생명', '롯데건설', '삼성물산', '삼성생명', '서울주택도시공사', '중앙건설']
 
 const CompanyImage = ({ company }) => {
@@ -52,6 +44,15 @@ const CompanyWrap = styled.div`
   height: 80px;
   border-radius: 50%;
   background-color: white;
+`
+
+const HeadContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
 `
 
 const Container = styled.div`
@@ -89,4 +90,4 @@ const Container = styled.div`
   }
 `
 
-export default CardPrev
+export default CardPreview

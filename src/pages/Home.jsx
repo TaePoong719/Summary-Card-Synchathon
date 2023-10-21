@@ -10,30 +10,25 @@ import { Link, useLocation } from 'react-router-dom'
 import CardInsurance from '../components/CardInsurnace.jsx'
 import { v4 as uuidv4 } from 'uuid'
 import { AuthContext } from '../provider/userContext'
+import { useRecoilState } from 'recoil'
+import { searchedUserCardsState, userCardsState } from '../atom/userCardState'
 
-const Home = ({
-  userCards,
-  setUserCards,
-  searchedCards,
-  setSearchedCards,
-  setLoading,
-  isModalOpen,
-}) => {
+const Home = ({ setLoading, isModalOpen }) => {
   const location = useLocation()
   const cardId = uuidv4()
   const uid = useContext(AuthContext).uid
+  const [userCards, setUserCards] = useRecoilState(userCardsState)
+  const [searchedUserCards, setSearchedUserCards] = useRecoilState(searchedUserCardsState)
 
   useEffect(() => {
-    setSearchedCards(userCards)
+    setSearchedUserCards(userCards)
   }, [userCards])
 
   return (
     <Container>
       <HeadlineContainer>
         <ButtonsContainer>
-          <StyledButton
-            onClickHandler={() => CardInsurance({ userCards, setUserCards, setLoading, uid })}
-          >
+          <StyledButton onClickHandler={() => CardInsurance({ setLoading, uid, setUserCards })}>
             <p>내 보험 {<br />}불러오기</p>
           </StyledButton>
           <Link to={'/housing'} state={{ background: location }}>
@@ -42,14 +37,10 @@ const Home = ({
             </StyledButton>
           </Link>
         </ButtonsContainer>
-        <Search
-          userCards={userCards}
-          searchedCards={searchedCards}
-          setSearchedCards={setSearchedCards}
-        />
+        <Search />
       </HeadlineContainer>
       <CardContainer isModalOpen={isModalOpen}>
-        {searchedCards.map((card) => {
+        {searchedUserCards.map((card) => {
           return (
             <Link
               key={`link${card.cardId}`}
